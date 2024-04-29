@@ -1,5 +1,5 @@
 {
-  "url": "https://ton-music.vercel.app/tonconnect-manifest.json",
+  "url": "https://ton-music.vercel.app",
   "name": "TonMusic",
   "iconUrl": "https://ton-music.vercel.app/vite.svg"
 }
