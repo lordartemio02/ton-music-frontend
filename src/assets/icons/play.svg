@@ -1,8 +1,4 @@
-import { FC } from "react";
-
-const PlayIcon: FC = () => {
-  return (
-    <svg
+<svg
       width="28"
       height="29"
       viewBox="0 0 28 29"
@@ -14,7 +10,3 @@ const PlayIcon: FC = () => {
         fill="white"
       />
     </svg>
-  );
-};
-
-export default PlayIcon;
