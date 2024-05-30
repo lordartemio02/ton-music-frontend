@@ -1,11 +1,12 @@
-import { TonConnectButton } from "@tonconnect/ui-react";
 import ControlMusicPanel from "./components/ControlMusicPanel";
+import Header from "./components/Header";
 
 function App() {
   return (
     <>
-      <div>
-        <TonConnectButton />
+      <div className="min-h-screen">
+        <Header />
+
         <div className="fixed bottom-0 left-0 w-full">
           <ControlMusicPanel
             name="За Тебя Родина-Мать"
