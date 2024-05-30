@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect } from "react";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { HeartIcon, PlayIcon } from "../../assets/icons";
+import { HeartIcon, PauseIcon, PlayIcon } from "../../assets/icons";
 import { useAudioTime } from "../../hooks/useAudioTime";
 import ProgressBar from "../ProgressBar";
 import { IControlMusicPanel } from "./ControlMusicPanel.interface";
@@ -60,7 +60,7 @@ const ControlMusicPanel: FC<IControlMusicPanel> = ({
           <HeartIcon />
         </div>
         <div className="cursor-pointer" onClick={togglePlayPause}>
-          {playing ? <div className="text-white">pause</div> : <PlayIcon />}
+          {playing ? <PauseIcon /> : <PlayIcon />}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import { TonConnectButton } from "@tonconnect/ui-react";
 import { FC } from "react";
 import Avatar from "../Avatar";
+import ConnectWallet from "../ConnectWallet";
 
 const Header: FC = () => {
   return (
@@ -10,7 +10,7 @@ const Header: FC = () => {
         <div>TONM</div>
         <div className="mr-2">1000</div>
       </div>
-      <TonConnectButton />
+      <ConnectWallet />
     </div>
   );
 };
