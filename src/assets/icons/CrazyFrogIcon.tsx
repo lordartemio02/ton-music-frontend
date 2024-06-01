@@ -1,14 +1,14 @@
-import { FC } from "react";
+import { forwardRef } from "react";
 
-const CrazyFrogIcon: FC = ({
-  className,
-  ref,
-  style,
-}: {
+interface ICrazyFrogIcon {
   className?: string;
-  ref?: any;
   style?: any;
-}) => {
+}
+
+const CrazyFrogIcon = forwardRef<any, ICrazyFrogIcon>(function (
+  { className, style },
+  ref
+) {
   return (
     <svg
       ref={ref}
@@ -66,6 +66,6 @@ const CrazyFrogIcon: FC = ({
       </defs>
     </svg>
   );
-};
+});
 
 export default CrazyFrogIcon;
