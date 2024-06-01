@@ -19,7 +19,7 @@ import { ILayout } from "./Layout.interface";
 
 const Layout: FC<ILayout> = ({ children }) => {
   const location = useLocation();
-  const rx = new RegExp(/tasks$/, "i");
+  const rx = new RegExp(/player$/, "i");
 
   const isRenderMusicPanel = rx.test(location.pathname);
 
