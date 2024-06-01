@@ -12,7 +12,7 @@ const MusicPlaying: FC = () => {
       className="relative mx-auto w-fit rounded-[170px] my-[100px] cursor-pointer"
       onClick={togglePlayPause}
     >
-      <div className="bg-[#B00FB4] w-[350px] h-[170px] rounded-[170px] absolute -top-[60px] -left-1/2 blur-[40px]" />
+      <div className="bg-[#B00FB4] w-[280px] h-[170px] rounded-[170px] absolute -top-[60px] -left-1/2 translate-x-[20px] blur-[40px]" />
       <div className="bg-[#EFEFF4]/60 flex items-center gap-[10px] px-[22px] py-[18px] rounded-[46px] relative z-10">
         <div className="pr-[40px] text-black uppercase font-bold">PUSH ME</div>
         <div className="w-[84px] h-[84px] absolute top-1/2 -translate-y-1/2 -right-[25px]">

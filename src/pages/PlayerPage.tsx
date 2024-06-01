@@ -6,6 +6,8 @@ import PlayerControl from "../components/PlayerControl";
 import { useAudioTime } from "../hooks/useAudioTime";
 import { convertSecondsToMinutesAndSeconds } from "../utils";
 
+import data from "../mock/audiolist.json";
+
 const breakpoints = {
   320: {
     slidesPerView: 1,
@@ -25,45 +27,6 @@ const breakpoints = {
   },
 };
 
-const data = [
-  {
-    id: "1",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s",
-    title: "test 1",
-    audio:
-      "https://dnl2.drivemusic.me/dl/MI00mDmG1HnNwwlIznC-Ow/1717298237/download_music/2018/03/jauz-feat.-example-in-the-zone.mp3",
-  },
-  {
-    id: "2",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s",
-    title: "test 2",
-    audio:
-      "https://cdn4.drivemusic.me/dl/online/KHlun1U6st2yNZzv7HSNaQ/1716873661/download_music/2014/02/ljubje-za-tebja-rodina-mat.mp3",
-  },
-  {
-    id: "3",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s",
-    title: "test 3",
-    audio:
-      "https://dnl2.drivemusic.me/dl/MI00mDmG1HnNwwlIznC-Ow/1717298237/download_music/2018/03/jauz-feat.-example-in-the-zone.mp3",
-  },
-  {
-    id: "4",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s",
-    title: "test 4",
-    audio:
-      "https://dnl2.drivemusic.me/dl/MI00mDmG1HnNwwlIznC-Ow/1717298237/download_music/2018/03/jauz-feat.-example-in-the-zone.mp3",
-  },
-
-  {
-    id: "5",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s",
-    title: "test 5",
-    audio:
-      "https://dnl2.drivemusic.me/dl/MI00mDmG1HnNwwlIznC-Ow/1717298237/download_music/2018/03/jauz-feat.-example-in-the-zone.mp3",
-  },
-];
-
 const PlayerPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
@@ -75,7 +38,7 @@ const PlayerPage: FC = () => {
   };
 
   useEffect(() => {
-    load(data[0].audio, {
+    load(data[0].link, {
       autoplay: false,
       html5: true,
       format: "mp3",
@@ -94,7 +57,7 @@ const PlayerPage: FC = () => {
 
     ref.current?.swiper.slideNext();
 
-    load(data[ref.current?.swiper.activeIndex].audio, {
+    load(data[ref.current?.swiper.activeIndex].link, {
       autoplay: true,
       html5: true,
       format: "mp3",
@@ -106,15 +69,19 @@ const PlayerPage: FC = () => {
 
     ref.current?.swiper.slidePrev();
 
-    load(data[ref.current?.swiper.activeIndex].audio, {
+    load(data[ref.current?.swiper.activeIndex].link, {
       autoplay: true,
       html5: true,
       format: "mp3",
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem("audioIndex", ref.current?.swiper.activeIndex);
+  }, [ref.current?.swiper.activeIndex]);
+
   return (
-    <div>
+    <div className="mt-5">
       <Swiper
         ref={ref}
         slidesPerView={1}
@@ -123,7 +90,7 @@ const PlayerPage: FC = () => {
         breakpoints={breakpoints}
         className="h-[250px]"
         onSlideChange={(e) =>
-          load(data[e.activeIndex].audio, {
+          load(data[e.activeIndex].link, {
             autoplay: true,
             html5: true,
             format: "mp3",
@@ -135,15 +102,23 @@ const PlayerPage: FC = () => {
             key={item.id}
             className="bg-red-500 rounded-[18px] overflow-hidden"
           >
-            <img src={item.src} alt="" className="w-fyll h-full object-cover" />
+            <img
+              src={`/images/${item.img}.png`}
+              alt={`${item.artist} ${item.name}`}
+              className="w-full h-full object-cover"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mt-10">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
-            <div className="text-white text-[17px] font-semibold">Apache</div>
-            <div className="text-[#707579] text-[13px]">Bvrnout</div>
+            <div className="text-white text-[17px] font-semibold">
+              {data[ref.current?.swiper.activeIndex]?.name}
+            </div>
+            <div className="text-[#707579] text-[13px]">
+              {data[ref.current?.swiper.activeIndex]?.artist}
+            </div>
           </div>
           <ShareOutlineIcon onClick={handleShare} className="cursor-pointer" />
         </div>
