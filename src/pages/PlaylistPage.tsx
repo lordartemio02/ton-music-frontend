@@ -1,14 +1,8 @@
 import { FC } from "react";
-import ActionCards from "../components/ActionCards";
 import MusicPlaying from "../components/MusicPlaying";
 
 const PlaylistPage: FC = () => {
-  return (
-    <>
-      <MusicPlaying />
-      <ActionCards />
-    </>
-  );
+  return <MusicPlaying />;
 };
 
 export default PlaylistPage;
