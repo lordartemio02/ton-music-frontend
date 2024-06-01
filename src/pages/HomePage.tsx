@@ -34,7 +34,10 @@ const HomePage: FC = () => {
             <div className="w-7 h-7"></div>
             <div className="flex flex-row items-center justify-center gap-1">
               {[0, 1, 2].map((_, i) => (
-                <SliderPoint isActive={i === activeSlide} />
+                <SliderPoint
+                  key={`slide-home-${i}`}
+                  isActive={i === activeSlide}
+                />
               ))}
             </div>
             <button onClick={() => setIsOpen(false)}>

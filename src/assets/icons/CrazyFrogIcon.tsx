@@ -1,4 +1,6 @@
-const CrazyFrogIcon = ({
+import { FC } from "react";
+
+const CrazyFrogIcon: FC = ({
   className,
   ref,
   style,
@@ -17,8 +19,9 @@ const CrazyFrogIcon = ({
       viewBox="0 0 149 245"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink">
-      <g clip-path="url(#clip0_1325_15913)">
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <g clipPath="url(#clip0_1325_15913)">
         <path d="M149 0H0V244.36H149V0Z" fill="url(#pattern0_1325_15913)" />
         <path d="M65 129H35V156.83H65V129Z" fill="url(#pattern1_1325_15913)" />
       </g>
@@ -27,7 +30,8 @@ const CrazyFrogIcon = ({
           id="pattern0_1325_15913"
           patternContentUnits="objectBoundingBox"
           width="1"
-          height="1">
+          height="1"
+        >
           <use
             xlinkHref="#image0_1325_15913"
             transform="scale(0.00333333 0.00203252)"
@@ -37,7 +41,8 @@ const CrazyFrogIcon = ({
           id="pattern1_1325_15913"
           patternContentUnits="objectBoundingBox"
           width="1"
-          height="1">
+          height="1"
+        >
           <use
             xlinkHref="#image1_1325_15913"
             transform="matrix(0.000625 0 0 0.000673739 0 -0.0389908)"

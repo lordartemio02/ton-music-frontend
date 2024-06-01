@@ -1,3 +1,3 @@
 export interface IAvatar {
-  src: string;
+  src?: string;
 }
