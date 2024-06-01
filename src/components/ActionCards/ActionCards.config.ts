@@ -22,7 +22,7 @@ export const actionCardsList = [
     onClick: () => {
       const utils = initUtils();
       utils.openTelegramLink(
-        "https://t.me/share/url?url=https://t.me/ton_music_bot"
+        "https://t.me/share/url?url=https://t.me/ton_music_bot/TonMusic"
       );
     },
     path: "/",
