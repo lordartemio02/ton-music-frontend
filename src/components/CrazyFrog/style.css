@@ -1,0 +1,17 @@
+.blocks {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  animation: fade-up-and-out 2s ease-in-out;
+}
+
+@keyframes fade-up-and-out {
+  0% {
+    opacity: 1;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+}
