@@ -1,6 +1,7 @@
 import { FC, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { HeartIcon, PauseIcon, PlayIcon } from "../../assets/icons";
+import { PauseIcon, PlayIcon } from "../../assets/icons";
 import { useAudioTime } from "../../hooks/useAudioTime";
 import ProgressBar from "../ProgressBar";
 import { IControlMusicPanel } from "./ControlMusicPanel.interface";
@@ -14,6 +15,8 @@ const ControlMusicPanel: FC<IControlMusicPanel> = ({
   const time = useAudioTime();
   const { load, togglePlayPause, seek, playing, duration } =
     useGlobalAudioPlayer();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     load(src, {
@@ -30,8 +33,16 @@ const ControlMusicPanel: FC<IControlMusicPanel> = ({
     [seek]
   );
 
+  const handleTogglePlayPause = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    togglePlayPause();
+  };
+
   return (
-    <div className="relative rounded-lg p-2 bg-[#161A1D] flex items-center justify-between">
+    <div
+      className="relative rounded-lg p-2 bg-[#161A1D] flex items-center justify-between"
+      onClick={() => navigate("/player")}
+    >
       <div className="absolute -top-4 left-0 w-full px-[13px]">
         <ProgressBar
           min={0}
@@ -56,10 +67,7 @@ const ControlMusicPanel: FC<IControlMusicPanel> = ({
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <div className="cursor-pointer">
-          <HeartIcon />
-        </div>
-        <div className="cursor-pointer" onClick={togglePlayPause}>
+        <div className="cursor-pointer" onClick={handleTogglePlayPause}>
           {playing ? <PauseIcon /> : <PlayIcon />}
         </div>
       </div>
