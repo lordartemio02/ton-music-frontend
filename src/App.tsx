@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Header from "./components/Header";
 
 import { useState } from "react";
@@ -88,7 +89,38 @@ function App() {
         </div> */}
       </div>
     </>
+=======
+import { FC, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import { authRoutes, publicRoutes } from "./routers";
+
+const App: FC = () => {
+  const isAuth = true;
+  const [routs, setRouts] = useState(publicRoutes);
+
+  useEffect(() => {
+    if (!isAuth) {
+      setRouts(publicRoutes);
+    } else {
+      setRouts(authRoutes);
+    }
+  }, [isAuth]);
+
+  return (
+    <Layout>
+      <Routes>
+        {routs.map((route) => (
+          <Route
+            path={route.path}
+            key={route.path}
+            Component={route.component}
+          />
+        ))}
+      </Routes>
+    </Layout>
+>>>>>>> ce705114678a4f05ee5ed4860beb0fd3c1fd2903
   );
-}
+};
 
 export default App;
