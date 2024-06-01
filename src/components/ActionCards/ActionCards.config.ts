@@ -38,6 +38,10 @@ export const actionCardsList = [
     title: "Contact to team",
     subtitle: "Offer or help",
     img: telegramImg,
+    onClick: () => {
+      const utils = initUtils();
+      utils.openTelegramLink("https://t.me/iamidrisov");
+    },
     path: "/",
   },
 ];
