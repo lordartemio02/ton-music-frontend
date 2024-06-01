@@ -17,7 +17,7 @@ export default defineConfig({
     port: 443,
     host: "0.0.0.0",
     hmr: {
-      host: "tg-mini-app.local",
+      host: "tg-music-app.local",
       port: 443,
     },
     https: {
