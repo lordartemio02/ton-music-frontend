@@ -8,10 +8,10 @@ import {
   CloseIcon,
 } from "../assets/icons";
 import ActionCards from "../components/ActionCards";
+import CrazyFrog from "../components/CrazyFrog";
 import Modal from "../components/Modal";
 import ModalEndContent from "../components/ModalEndContent";
 import ModalStartContent from "../components/ModalStartContent";
-import MusicPlaying from "../components/MusicPlaying";
 import Slider from "../components/Slider";
 import SliderPoint from "../components/SliderPoint";
 
@@ -26,7 +26,7 @@ const HomePage: FC = () => {
 
   return (
     <>
-      <MusicPlaying />
+      <CrazyFrog />
       <ActionCards />
       <Modal handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col">
