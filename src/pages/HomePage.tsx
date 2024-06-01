@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "swiper/css";
 import { SwiperSlide } from "swiper/react";
 import {
@@ -20,11 +20,14 @@ const HomePage: FC = () => {
 
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
+
   return (
     <>
       <MusicPlaying />
       <ActionCards />
-      <button onClick={() => setIsOpen(true)}>Click to Open Modal</button>
       <Modal handleClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col">
           <div className="flex justify-between px-3 pt-1 mb-11">
