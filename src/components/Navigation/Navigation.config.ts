@@ -12,6 +12,11 @@ export const navigationList = [
     path: "/",
   },
   {
+    Img: PlaylistIcon,
+    title: "Playlist",
+    path: "/playlist",
+  },
+  {
     Img: TasksIcon,
     title: "Tasks",
     path: "/tasks",
@@ -20,10 +25,5 @@ export const navigationList = [
     Img: SearchIcon,
     title: "Search",
     path: "/search",
-  },
-  {
-    Img: PlaylistIcon,
-    title: "Playlist",
-    path: "/playlist",
   },
 ];

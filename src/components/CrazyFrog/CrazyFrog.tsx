@@ -35,7 +35,7 @@ const CrazyFrog: FC = () => {
     setVisible((prevVisible) => prevVisible + 1);
     const x = e.nativeEvent.offsetX;
     const y = e.nativeEvent.offsetY;
-    setScale(0.9);
+    setScale(0.95);
 
     // Возвращаем в базовое состояние через 200 мс
     setTimeout(() => setScale(1), 200);
@@ -46,8 +46,7 @@ const CrazyFrog: FC = () => {
   return (
     <div
       className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
       <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
         <CrazyFrogIcon

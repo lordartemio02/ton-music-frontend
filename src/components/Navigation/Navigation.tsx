@@ -13,8 +13,7 @@ const Navigation: FC = () => {
             `w-[74px] py-[10px] flex flex-col justify-center items-center text-[10px] font-semibold gap-3 ${
               isActive ? "text-white" : "text-[#707579]"
             }`
-          }
-        >
+          }>
           {({ isActive }) => (
             <>
               {
