@@ -37,8 +37,16 @@ const CrazyFrog: FC = () => {
     const y = e.nativeEvent.offsetY;
     setScale(0.95);
 
-    // Возвращаем в базовое состояние через 200 мс
-    setTimeout(() => setScale(1), 200);
+    // Возвращаем в базовое состояние через 50 мс
+    setTimeout(() => setScale(1), 50);
+    const money = localStorage.getItem("money");
+    if (!money) {
+      localStorage.setItem("money", "3");
+      window.dispatchEvent(new Event("storage"));
+    } else {
+      localStorage.setItem("money", `${parseInt(money) + 3}`);
+      window.dispatchEvent(new Event("storage"));
+    }
 
     setBlockPositions((prev: any) => [...prev, { x, y }]);
   };
