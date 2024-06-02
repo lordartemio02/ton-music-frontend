@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { PauseIcon, PlayIcon } from "../../assets/icons";
@@ -6,25 +6,15 @@ import { useAudioTime } from "../../hooks/useAudioTime";
 import ProgressBar from "../ProgressBar";
 import { IControlMusicPanel } from "./ControlMusicPanel.interface";
 
-const ControlMusicPanel: FC<IControlMusicPanel> = ({
-  name,
-  artist,
-  img,
-  src,
-}) => {
+const ControlMusicPanel: FC<IControlMusicPanel> = ({ name, artist, img }) => {
   const time = useAudioTime();
-  const { load, togglePlayPause, seek, playing, duration } =
-    useGlobalAudioPlayer();
+  const { togglePlayPause, seek, playing, duration } = useGlobalAudioPlayer();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    load(src, {
-      autoplay: false,
-      html5: true,
-      format: "mp3",
-    });
-  }, [load, src]);
+  const handleClickGlobalPlayer = () => {
+    navigate("/player");
+  };
 
   const onChangeRate = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +31,7 @@ const ControlMusicPanel: FC<IControlMusicPanel> = ({
   return (
     <div
       className="relative rounded-lg p-2 bg-[#161A1D] flex items-center justify-between"
-      onClick={() => navigate("/player")}
+      onClick={handleClickGlobalPlayer}
     >
       <div className="absolute -top-4 left-0 w-full px-[13px]">
         <ProgressBar

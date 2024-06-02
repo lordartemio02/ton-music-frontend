@@ -5,12 +5,18 @@ import Header from "../Header";
 import Navigation from "../Navigation";
 import { ILayout } from "./Layout.interface";
 
+import { useGlobalAudioPlayer } from "react-use-audio-player";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import data from "../../mock/audiolist.json";
 import ModalSwiper from "../ModalSwiper";
 
 const Layout: FC<ILayout> = ({ children }) => {
+  const { load } = useGlobalAudioPlayer();
   const location = useLocation();
   const rx = new RegExp(/player$/, "i");
+
+  const currentMucsic = useAppSelector((state) => state.music.currentMusic);
+  const isAutoplay = useAppSelector((state) => state.music.isAutoplay);
 
   const isRenderMusicPanel = rx.test(location.pathname);
 
@@ -22,6 +28,14 @@ const Layout: FC<ILayout> = ({ children }) => {
       setIsOpen(true);
     }
   }, []);
+
+  useEffect(() => {
+    load(currentMucsic.link, {
+      autoplay: isAutoplay,
+      html5: true,
+      format: "mp3",
+    });
+  }, [currentMucsic.link, isAutoplay, load]);
 
   const audioIndex = Number(localStorage.getItem("audioIndex")) || 0;
 
@@ -38,7 +52,6 @@ const Layout: FC<ILayout> = ({ children }) => {
           <ControlMusicPanel
             name={data[audioIndex].name}
             artist={data[audioIndex].artist}
-            src={data[audioIndex].link}
             img={`/images/${data[audioIndex].img}.png`}
           />
         )}
