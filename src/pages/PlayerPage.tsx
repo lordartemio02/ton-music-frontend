@@ -6,8 +6,6 @@ import PlayerControl from "../components/PlayerControl";
 import { useAudioTime } from "../hooks/useAudioTime";
 import { convertSecondsToMinutesAndSeconds } from "../utils";
 
-import { useBackButton } from "@tma.js/sdk-react";
-import { useLocation, useNavigate } from "react-router-dom";
 import data from "../mock/audiolist.json";
 
 const breakpoints = {
@@ -35,22 +33,6 @@ const PlayerPage: FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const time = useAudioTime();
   const { load, seek, duration } = useGlobalAudioPlayer();
-
-  const bb = useBackButton();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const rx = new RegExp(/player$/, "i");
-    if (bb && rx.test(location.pathname)) {
-      bb.show();
-      bb.on("click", () => {
-        navigate(-1);
-      });
-    } else {
-      bb.hide();
-    }
-  }, [bb, location.pathname, navigate]);
 
   const handleShare = () => {
     console.log("share");
