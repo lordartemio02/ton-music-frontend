@@ -3,6 +3,9 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
+import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
+import data from "../../mock/audiolist.json";
+
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef(null);
@@ -11,9 +14,9 @@ const CrazyFrog: FC = () => {
 
   const [visible, setVisible] = useState(0);
 
-  // const { playing: playingGlobal } = useGlobalAudioPlayer();
+  const { playing: playingGlobal } = useGlobalAudioPlayer();
 
-  // const { pause, playing, load, play } = useAudioPlayer();
+  const { playing, load, play, pause } = useAudioPlayer();
 
   useEffect(() => {
     const handleAnimationEnd = (e: any) => {
@@ -35,35 +38,39 @@ const CrazyFrog: FC = () => {
     };
   }, [visible]);
 
-  // useEffect(() => {
-  //   localStorage.removeItem("date");
-  // }, []);
+  useEffect(() => {
+    localStorage.removeItem("date");
+    pause();
+  }, [playingGlobal]);
 
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     const lsDate = localStorage.getItem("date");
-  //     console.log(playing);
-  //     console.log(playingGlobal);
-  //     if (!playingGlobal && lsDate && !playing) {
-  //       console.log("here");
+  useEffect(() => {
+    const id = setInterval(() => {
+      const lsDate = localStorage.getItem("date");
+      if (!!lsDate && playing) {
+        const date = Date.now();
 
-  //       play();
-  //     }
-  //     if (lsDate && playing) {
-  //       const date = Date.now();
-  //       const differenceInMillis = Math.abs(date - parseInt(lsDate));
+        const differenceInMillis = Math.abs(date - parseInt(lsDate, 10));
 
-  //       // Преобразуем разницу в миллисекундах в секунды
-  //       const differenceInSeconds = differenceInMillis / 1000;
-  //       if (differenceInSeconds > 3) {
-  //         pause();
-  //         localStorage.removeItem("date");
-  //       }
-  //     }
-  //   }, 3000);
+        // Преобразуем разницу в миллисекундах в секунды
+        const differenceInSeconds = differenceInMillis / 1000;
 
-  //   return () => clearInterval(id);
-  // }, []);
+        if (differenceInSeconds > 3) {
+          pause();
+          localStorage.removeItem("date");
+        }
+      }
+    }, 1_000);
+
+    return () => clearInterval(id);
+  }, [playing]);
+
+  useEffect(() => {
+    load(data[1].link, {
+      autoplay: false,
+      html5: true,
+      format: "mp3",
+    });
+  }, []);
 
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
@@ -71,20 +78,22 @@ const CrazyFrog: FC = () => {
     const y = e.nativeEvent.offsetY;
     setScale(0.95);
 
-    // localStorage.setItem("date", `${Date.now()}`);
+    const lsDate = localStorage.getItem("date");
+    if (!playingGlobal && !lsDate && !playing) {
+      setTimeout(() => {
+        play();
+      }, 1_000);
+    }
 
     // Возвращаем в базовое состояние через 50 мс
-    setTimeout(() => setScale(1), 50);
+    const id = setTimeout(() => {
+      setScale(1);
+      clearTimeout(id);
+    }, 50);
     const money = localStorage.getItem("money");
 
-    // if (!playing) {
-    //   load(data[1].link, {
-    //     autoplay: false,
-    //     html5: true,
-    //     format: "mp3",
-    //   });
-    //   localStorage.setItem("audioIndex", "1");
-    // }
+    localStorage.setItem("date", `${Date.now()}`);
+
     if (!money) {
       localStorage.setItem("money", "3");
       window.dispatchEvent(new Event("storage"));
@@ -99,6 +108,7 @@ const CrazyFrog: FC = () => {
   return (
     <div
       className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
+      onDoubleClick={handleClick}
       onClick={handleClick}>
       <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
       <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
