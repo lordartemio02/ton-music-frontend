@@ -8,7 +8,7 @@ import "./index.css";
 const manifestUrl = "https://ton-music.vercel.app/tonconnect-manifest.json";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <SDKProvider acceptCustomStyles debug>
+  <SDKProvider acceptCustomStyles>
     <BrowserRouter>
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <App />
