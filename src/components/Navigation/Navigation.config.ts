@@ -25,5 +25,6 @@ export const navigationList = [
     Img: SearchIcon,
     title: "Search",
     path: "/search",
+    disabled: true,
   },
 ];
