@@ -3,7 +3,11 @@ import "swiper/css";
 import CrazyFrog from "../components/CrazyFrog";
 
 const HomePage: FC = () => {
-  return <CrazyFrog />;
+  return (
+    <div className="h-[calc(100vh-192px)] flex flex-col justify-center">
+      <CrazyFrog />
+    </div>
+  );
 };
 
 export default HomePage;
