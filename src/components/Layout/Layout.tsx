@@ -39,7 +39,7 @@ const Layout: FC<ILayout> = ({ children }) => {
   const audioIndex = Number(localStorage.getItem("audioIndex")) || 0;
 
   return (
-    <div className="min-h-screen bg-black flex flex-col w-full px-4 pt-1">
+    <div className="h-dvh bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto">
       <Header />
       <main className="flex-1 text-white mt-4 mb-[135px]">{children}</main>
       <div className="fixed w-full left-0 bottom-0 z-10">
