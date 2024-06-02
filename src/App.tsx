@@ -8,6 +8,12 @@ const App: FC = () => {
   const [routs, setRouts] = useState(publicRoutes);
 
   useEffect(() => {
+    window.onbeforeunload = function () {
+      return true;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isAuth) {
       setRouts(publicRoutes);
     } else {
