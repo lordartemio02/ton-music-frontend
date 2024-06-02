@@ -11,6 +11,10 @@ const CrazyFrog: FC = () => {
 
   const [visible, setVisible] = useState(0);
 
+  // const { playing: playingGlobal } = useGlobalAudioPlayer();
+
+  // const { pause, playing, load, play } = useAudioPlayer();
+
   useEffect(() => {
     const handleAnimationEnd = (e: any) => {
       if (e.animationName === "fade-up-and-out") {
@@ -31,15 +35,56 @@ const CrazyFrog: FC = () => {
     };
   }, [visible]);
 
+  // useEffect(() => {
+  //   localStorage.removeItem("date");
+  // }, []);
+
+  // useEffect(() => {
+  //   const id = setInterval(() => {
+  //     const lsDate = localStorage.getItem("date");
+  //     console.log(playing);
+  //     console.log(playingGlobal);
+  //     if (!playingGlobal && lsDate && !playing) {
+  //       console.log("here");
+
+  //       play();
+  //     }
+  //     if (lsDate && playing) {
+  //       const date = Date.now();
+  //       const differenceInMillis = Math.abs(date - parseInt(lsDate));
+
+  //       // Преобразуем разницу в миллисекундах в секунды
+  //       const differenceInSeconds = differenceInMillis / 1000;
+  //       if (differenceInSeconds > 3) {
+  //         pause();
+  //         localStorage.removeItem("date");
+  //       }
+  //     }
+  //   }, 3000);
+
+  //   return () => clearInterval(id);
+  // }, []);
+
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
     const x = e.nativeEvent.offsetX;
     const y = e.nativeEvent.offsetY;
     setScale(0.95);
 
+    // localStorage.setItem("date", `${Date.now()}`);
+
     // Возвращаем в базовое состояние через 50 мс
     setTimeout(() => setScale(1), 50);
     const money = localStorage.getItem("money");
+
+    // if (!playing) {
+    //   load(data[1].link, {
+    //     autoplay: false,
+    //     html5: true,
+    //     format: "mp3",
+    //   });
+    //   localStorage.setItem("audioIndex", "1");
+    // }
     if (!money) {
       localStorage.setItem("money", "3");
       window.dispatchEvent(new Event("storage"));
@@ -64,7 +109,10 @@ const CrazyFrog: FC = () => {
         />
       </div>
       {blockPositions.map(({ x, y }: any, index: number) => (
-        <div key={index} className="blocks z-[100]" style={{ left: x, top: y }}>
+        <div
+          key={index}
+          className="blocks z-[100] text-2xl"
+          style={{ left: x, top: y }}>
           +3
         </div>
       ))}
