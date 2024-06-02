@@ -6,7 +6,10 @@ import PlayerControl from "../components/PlayerControl";
 import { useAudioTime } from "../hooks/useAudioTime";
 import { convertSecondsToMinutesAndSeconds } from "../utils";
 
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { useAppSelector } from "../hooks/useAppSelector";
 import data from "../mock/audiolist.json";
+import { setCurrentMusic, setIsAutoplayMusic } from "../redux/state/musicSlice";
 
 const breakpoints = {
   320: {
@@ -32,19 +35,14 @@ const PlayerPage: FC = () => {
   const ref = useRef<any>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const time = useAudioTime();
-  const { load, seek, duration } = useGlobalAudioPlayer();
+  const { seek, duration } = useGlobalAudioPlayer();
+
+  const list = useAppSelector((state) => state.music.list);
+  const dispatch = useAppDispatch();
 
   const handleShare = () => {
     console.log("share");
   };
-
-  useEffect(() => {
-    load(data[0].link, {
-      autoplay: false,
-      html5: true,
-      format: "mp3",
-    });
-  }, []);
 
   const onChangeRate = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,24 +55,16 @@ const PlayerPage: FC = () => {
     if (!ref.current?.swiper) return;
 
     ref.current?.swiper.slideNext();
-
-    load(data[ref.current?.swiper.activeIndex].link, {
-      autoplay: true,
-      html5: true,
-      format: "mp3",
-    });
+    dispatch(setCurrentMusic(list[ref.current?.swiper.activeIndex]));
+    dispatch(setIsAutoplayMusic(true));
   };
 
   const onPrev = () => {
     if (!ref.current?.swiper) return;
 
     ref.current?.swiper.slidePrev();
-
-    load(data[ref.current?.swiper.activeIndex].link, {
-      autoplay: true,
-      html5: true,
-      format: "mp3",
-    });
+    dispatch(setCurrentMusic(list[ref.current?.swiper.activeIndex]));
+    dispatch(setIsAutoplayMusic(true));
   };
 
   useEffect(() => {
@@ -99,13 +89,10 @@ const PlayerPage: FC = () => {
           height: Math.floor((window.innerHeight / 100) * 50),
           width: Math.floor(window.innerWidth - 32),
         }}
-        onSlideChange={(e) =>
-          load(data[e.activeIndex].link, {
-            autoplay: true,
-            html5: true,
-            format: "mp3",
-          })
-        }
+        onSlideChange={(e) => {
+          dispatch(setCurrentMusic(list[e.activeIndex]));
+          dispatch(setIsAutoplayMusic(true));
+        }}
       >
         {data.map((item) => (
           <SwiperSlide
