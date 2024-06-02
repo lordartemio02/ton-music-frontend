@@ -30,6 +30,7 @@ const breakpoints = {
 const PlayerPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const time = useAudioTime();
   const { load, seek, duration } = useGlobalAudioPlayer();
 
@@ -81,14 +82,23 @@ const PlayerPage: FC = () => {
   }, [ref.current?.swiper.activeIndex]);
 
   return (
-    <div className="mt-5">
+    <div
+      ref={wrapperRef}
+      className="mt-5 flex flex-col justify-between"
+      style={{
+        height: window.innerHeight - 135 - 70,
+      }}
+    >
       <Swiper
         ref={ref}
         slidesPerView={1}
         spaceBetween={40}
         centeredSlides={true}
         breakpoints={breakpoints}
-        className="h-[250px]"
+        style={{
+          height: Math.floor((window.innerHeight / 100) * 50),
+          width: Math.floor(window.innerWidth - 32),
+        }}
         onSlideChange={(e) =>
           load(data[e.activeIndex].link, {
             autoplay: true,
