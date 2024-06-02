@@ -6,6 +6,7 @@ import PlayerControl from "../components/PlayerControl";
 import { useAudioTime } from "../hooks/useAudioTime";
 import { convertSecondsToMinutesAndSeconds } from "../utils";
 
+import { useBackButton } from "@tma.js/sdk-react";
 import data from "../mock/audiolist.json";
 
 const breakpoints = {
@@ -33,6 +34,12 @@ const PlayerPage: FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const time = useAudioTime();
   const { load, seek, duration } = useGlobalAudioPlayer();
+
+  const bb = useBackButton();
+
+  useEffect(() => {
+    bb && bb.show();
+  }, [bb]);
 
   const handleShare = () => {
     console.log("share");
