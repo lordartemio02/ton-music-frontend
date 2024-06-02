@@ -79,13 +79,7 @@ const CrazyFrog: FC = () => {
     setScale(0.95);
 
     const lsDate = localStorage.getItem("date");
-    console.log("====================================");
-    console.log(!playingGlobal, !lsDate, !playing);
-    console.log("====================================");
     if (!playingGlobal && !lsDate && !playing) {
-      console.log("====================================");
-      console.log("here");
-      console.log("====================================");
       setTimeout(() => {
         play();
       }, 1_000);
