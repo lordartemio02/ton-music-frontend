@@ -8,7 +8,9 @@ import data from "../../mock/audiolist.json";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const outerRef = useRef(null);
 
   const [blockPositions, setBlockPositions] = useState<any>([]);
 
@@ -16,7 +18,7 @@ const CrazyFrog: FC = () => {
 
   const { playing: playingGlobal } = useGlobalAudioPlayer();
 
-  const { playing, load, play, pause } = useAudioPlayer();
+  const { playing, load, play, pause, mute, muted } = useAudioPlayer();
 
   useEffect(() => {
     const handleAnimationEnd = (e: any) => {
@@ -54,12 +56,12 @@ const CrazyFrog: FC = () => {
         // Преобразуем разницу в миллисекундах в секунды
         const differenceInSeconds = differenceInMillis / 1000;
 
-        if (differenceInSeconds > 3) {
+        if (differenceInSeconds > 1) {
           pause();
           localStorage.removeItem("date");
         }
       }
-    }, 1_000);
+    }, 500);
 
     return () => clearInterval(id);
   }, [playing]);
@@ -68,28 +70,50 @@ const CrazyFrog: FC = () => {
     load(data[1].link, {
       autoplay: false,
       html5: true,
+      loop: true,
       format: "mp3",
     });
   }, []);
 
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
-    const x = e.nativeEvent.offsetX;
-    const y = e.nativeEvent.offsetY;
+
+    for (let i = 0; i < e.touches.length; i++) {
+      const touch = e.touches[i];
+      const x = touch.clientX;
+      const y = touch.clientY;
+      let offsetX = 0,
+        offsetY = 0;
+
+      if (
+        outerRef &&
+        outerRef.current &&
+        x >= outerRef.current["offsetLeft"] &&
+        x <= outerRef.current["offsetLeft"] + outerRef.current["offsetWidth"] &&
+        y >= outerRef.current["offsetTop"] &&
+        y <= outerRef.current["offsetTop"] + outerRef.current["offsetHeight"]
+      ) {
+        offsetX = x - outerRef.current["offsetLeft"];
+        offsetY = y - outerRef.current["offsetTop"];
+      }
+
+      setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
+    }
+
     setScale(0.95);
 
     const lsDate = localStorage.getItem("date");
     if (!playingGlobal && !lsDate && !playing) {
       setTimeout(() => {
         play();
-      }, 1_000);
+      }, 500);
     }
 
     // Возвращаем в базовое состояние через 50 мс
     const id = setTimeout(() => {
       setScale(1);
       clearTimeout(id);
-    }, 50);
+    }, 20);
     const money = localStorage.getItem("money");
 
     localStorage.setItem("date", `${Date.now()}`);
@@ -101,31 +125,39 @@ const CrazyFrog: FC = () => {
       localStorage.setItem("money", `${parseInt(money) + 3}`);
       window.dispatchEvent(new Event("storage"));
     }
+  };
 
-    setBlockPositions((prev: any) => [...prev, { x, y }]);
+  const muteSound = () => {
+    mute(!muted);
   };
 
   return (
-    <div
-      className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-      onDoubleClick={handleClick}
-      onClick={handleClick}>
-      <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
-      <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
-        <CrazyFrogIcon
-          ref={ref}
-          style={{ transform: `scale(${scale})` }}
-          className="w-full"
-        />
+    <div>
+      <div className="flex flex-row" onClick={muteSound}>
+        mute
       </div>
-      {blockPositions.map(({ x, y }: any, index: number) => (
-        <div
-          key={index}
-          className="blocks z-[100] text-2xl"
-          style={{ left: x, top: y }}>
-          +3
+      <div
+        ref={outerRef}
+        className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
+        // onClick={handleClick}
+        onTouchStart={handleClick}>
+        <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
+        <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
+          <CrazyFrogIcon
+            ref={ref}
+            style={{ transform: `scale(${scale})` }}
+            className="w-full"
+          />
         </div>
-      ))}
+        {blockPositions.map(({ x, y }: any, index: number) => (
+          <div
+            key={index}
+            className="blocks z-[100] text-2xl"
+            style={{ left: x, top: y }}>
+            +3
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
