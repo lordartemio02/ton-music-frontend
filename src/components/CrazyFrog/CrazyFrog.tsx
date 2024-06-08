@@ -12,6 +12,7 @@ const CrazyFrog: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { notificationOccurred } = useHapticFeedback();
   const [error, setError] = useState<any>({});
+  const [someError, setSomeError] = useState<any>("noError");
 
   const outerRef = useRef(null);
 
@@ -103,6 +104,7 @@ const CrazyFrog: FC = () => {
         notificationOccurred("success");
       } catch (er) {
         setError(er);
+        setSomeError("error");
       }
 
       // try {
@@ -150,6 +152,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
+      <div>{someError}</div>
       <pre>{JSON.stringify(error, null, 2)}</pre>
       <pre>{JSON.stringify({ foo: "sample", bar: "sample" }, null, 2)}</pre>
       <div
