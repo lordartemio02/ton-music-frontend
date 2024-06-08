@@ -3,16 +3,15 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import data from "../../mock/audiolist.json";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { notificationOccurred } = useHapticFeedback();
-  const [error, setError] = useState<any>({});
-  const [someError, setSomeError] = useState<any>("noError");
+  // const { notificationOccurred } = useHapticFeedback();
+  // const [error, setError] = useState<any>({});
+  // const [someError, setSomeError] = useState<any>("noError");
 
   const outerRef = useRef(null);
 
@@ -100,12 +99,12 @@ const CrazyFrog: FC = () => {
         offsetX = x - outerRef.current["offsetLeft"];
         offsetY = y - outerRef.current["offsetTop"];
       }
-      try {
-        notificationOccurred("success");
-      } catch (er) {
-        setError(er);
-        setSomeError(JSON.stringify(er, null, 2));
-      }
+      // try {
+      //   notificationOccurred("success");
+      // } catch (er) {
+      //   setError(er);
+      //   setSomeError(JSON.stringify(er, null, 2));
+      // }
 
       // try {
       //   window.navigator.vibrate(5);
