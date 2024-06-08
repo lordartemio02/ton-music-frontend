@@ -11,6 +11,7 @@ const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
   const { impactOccurred } = useHapticFeedback();
+  const [error, setError] = useState<any>({});
 
   const outerRef = useRef(null);
 
@@ -102,7 +103,8 @@ const CrazyFrog: FC = () => {
       try {
         window.navigator.vibrate(5);
       } catch (error) {
-        impactOccurred("light");
+        setError(error);
+        // impactOccurred("light");
       }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
@@ -144,6 +146,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
+      <div>{JSON.stringify(error)}</div>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
