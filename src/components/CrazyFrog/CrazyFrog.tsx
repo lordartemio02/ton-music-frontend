@@ -105,8 +105,8 @@ const CrazyFrog: FC = () => {
       } catch (e) {
         try {
           impactOccurred("light");
-        } catch (error) {
-          setError(error);
+        } catch (er) {
+          setError(er);
         }
       }
 
