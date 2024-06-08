@@ -104,7 +104,7 @@ const CrazyFrog: FC = () => {
         notificationOccurred("success");
       } catch (er) {
         setError(er);
-        setSomeError("error");
+        setSomeError(JSON.stringify(er, null, 2));
       }
 
       // try {
