@@ -102,9 +102,12 @@ const CrazyFrog: FC = () => {
 
       try {
         window.navigator.vibrate(5);
-      } catch (error) {
-        setError(error);
-        impactOccurred("light");
+      } catch (e) {
+        try {
+          impactOccurred("light");
+        } catch (error) {
+          setError(error);
+        }
       }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
