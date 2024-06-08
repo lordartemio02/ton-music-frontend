@@ -102,8 +102,9 @@ const CrazyFrog: FC = () => {
       try {
         notificationOccurred("success");
       } catch (er) {
-        setError("error");
+        setError(er);
       }
+
       // try {
       //   window.navigator.vibrate(5);
       // } catch (e) {
@@ -149,7 +150,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      <div>{error}</div>
+      <pre>{JSON.stringify(error, null, 2)}</pre>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
