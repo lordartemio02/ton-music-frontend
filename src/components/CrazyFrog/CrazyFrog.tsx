@@ -145,18 +145,13 @@ const CrazyFrog: FC = () => {
     mute(!muted);
   };
 
-  const some = {
-    work: "some",
-  };
-
   return (
     <div>
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      {/* <pre>{JSON.stringify(error, null, 2)}</pre>
-      <pre>{JSON.stringify(InitData, null, 2)}</pre>
-      <pre>{JSON.stringify({ foo: "sample", bar: "sample" }, null, 2)}</pre> */}
+      <pre>{JSON.stringify(error, null, 2)}</pre>
+      <pre>{JSON.stringify({ foo: "sample", bar: "sample" }, null, 2)}</pre>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
