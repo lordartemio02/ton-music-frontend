@@ -101,9 +101,6 @@ const CrazyFrog: FC = () => {
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
-    if (supports("impactOccurred")) {
-      impactOccurred("light");
-    }
 
     setScale(0.95);
 
@@ -134,6 +131,9 @@ const CrazyFrog: FC = () => {
 
   const muteSound = () => {
     mute(!muted);
+    if (supports("impactOccurred")) {
+      impactOccurred("light");
+    }
   };
 
   return (
