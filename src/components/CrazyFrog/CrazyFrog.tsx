@@ -97,7 +97,7 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      window.navigator.vibrate(30);
+      window.navigator.vibrate(1);
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
