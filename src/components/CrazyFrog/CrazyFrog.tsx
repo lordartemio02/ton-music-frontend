@@ -10,7 +10,8 @@ import data from "../../mock/audiolist.json";
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { supports } = useHapticFeedback();
+  const { supports, impactOccurred } = useHapticFeedback();
+  const [error, setError] = useState();
 
   const outerRef = useRef(null);
 
@@ -99,13 +100,15 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      // try {
-      //   window.navigator.vibrate(5);
-      // } catch (error) {
-      //   if (supports("impactOccurred")) {
-      //     impactOccurred("light");
-      //   }
-      // }
+      try {
+        // window.navigator.vibrate(5);
+        impactOccurred("light");
+      } catch (error) {
+        setError(error);
+        // if (supports("impactOccurred")) {
+        //   impactOccurred("light");
+        // }
+      }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
@@ -146,7 +149,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      <div>{`${supports("impactOccurred")}`}</div>
+      <div>{JSON.stringify(error)}</div>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
