@@ -16,9 +16,12 @@ interface IMusicState {
   isAutoplay?: boolean;
 }
 
+const index = localStorage.getItem("audioIndex");
+const parsedIndex = parseInt(index ?? "0", 10);
+
 const initialState: IMusicState = {
   list: musicList,
-  currentMusic: musicList[0],
+  currentMusic: musicList[parsedIndex],
   isAutoplay: false,
 };
 
