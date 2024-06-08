@@ -3,15 +3,12 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
-import { useHapticFeedback } from "@tma.js/sdk-react";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import data from "../../mock/audiolist.json";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { impactOccurred } = useHapticFeedback();
-  const [error, setError] = useState<any>({});
 
   const outerRef = useRef(null);
 
@@ -100,15 +97,8 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      try {
-        // window.navigator.vibrate(5);
-        impactOccurred("light");
-      } catch (error) {
-        setError(error);
-        // if (supports("impactOccurred")) {
-        //   impactOccurred("light");
-        // }
-      }
+      // window.navigator.vibrate(5);
+      // impactOccurred("light");
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
@@ -149,7 +139,6 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      <div>{JSON.stringify(error)}</div>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
