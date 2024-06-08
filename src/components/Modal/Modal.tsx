@@ -1,9 +1,10 @@
 import { FC, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import ReactPortal from "../ReactPortal";
+import { IModal } from "./Modal.interface";
 import "./modalStyles.css";
 
-const Modal: FC<any> = ({ children, isOpen, handleClose }) => {
+const Modal: FC<IModal> = ({ children, isOpen, handleClose }) => {
   const nodeRef = useRef(null);
   useEffect(() => {
     const closeOnEscapeKey = (e: KeyboardEvent) =>
@@ -21,7 +22,8 @@ const Modal: FC<any> = ({ children, isOpen, handleClose }) => {
         timeout={{ enter: 0, exit: 300 }}
         unmountOnExit
         classNames="modal"
-        nodeRef={nodeRef}>
+        nodeRef={nodeRef}
+      >
         {/* <div className="fixed inset-0 bg-black flex flex-col items-center justify-center transition-all overflow-hidden z-[999] opacity-0 pointer-events-none transform scale-50"></div> */}
         <div className="modal" ref={nodeRef}>
           <div className="modal-content">{children}</div>
