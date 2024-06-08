@@ -96,8 +96,11 @@ const CrazyFrog: FC = () => {
         offsetX = x - outerRef.current["offsetLeft"];
         offsetY = y - outerRef.current["offsetTop"];
       }
-
-      window.navigator.vibrate(5);
+      try {
+        window.navigator.vibrate(5);
+      } catch (error) {
+        (window as any).Telegram.WebApp.HapticFeedback.impactOccurred("light");
+      }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
