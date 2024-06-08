@@ -99,11 +99,12 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      impactOccurred("heavy");
+      impactOccurred("light");
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
-      setScale(0.95);
     }
+
+    setScale(0.95);
 
     const lsDate = localStorage.getItem("date");
     if (!playingGlobal && !lsDate && !playing) {
