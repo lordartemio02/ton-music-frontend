@@ -10,7 +10,7 @@ import data from "../../mock/audiolist.json";
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { impactOccurred } = useHapticFeedback();
+  const { notificationOccurred } = useHapticFeedback();
   const [error, setError] = useState<any>("");
 
   const outerRef = useRef(null);
@@ -104,7 +104,7 @@ const CrazyFrog: FC = () => {
         window.navigator.vibrate(5);
       } catch (e) {
         try {
-          impactOccurred("light");
+          notificationOccurred("success");
         } catch (er) {
           setError("error");
         }
