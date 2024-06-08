@@ -10,7 +10,7 @@ import data from "../../mock/audiolist.json";
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { selectionChanged } = useHapticFeedback();
+  const { impactOccurred } = useHapticFeedback();
 
   const outerRef = useRef(null);
 
@@ -100,7 +100,7 @@ const CrazyFrog: FC = () => {
       }
 
       // window.navigator.vibrate(5);
-      selectionChanged();
+      impactOccurred("heavy");
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
