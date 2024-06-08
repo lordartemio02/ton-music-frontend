@@ -3,13 +3,14 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
+import { useHapticFeedback } from "@tma.js/sdk-react";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import data from "../../mock/audiolist.json";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  // const { impactOccurred } = useHapticFeedback();
+  const { notificationOccurred } = useHapticFeedback();
 
   const outerRef = useRef(null);
 
@@ -98,10 +99,10 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      // impactOccurred("light");
-
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
+
+    notificationOccurred("success");
 
     setScale(0.95);
 
