@@ -3,12 +3,14 @@ import { FC, useEffect, useRef, useState } from "react";
 import { CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
+import { useHapticFeedback } from "@tma.js/sdk-react";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import data from "../../mock/audiolist.json";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
+  const { impactOccurred, supports } = useHapticFeedback();
 
   const outerRef = useRef(null);
 
@@ -99,7 +101,9 @@ const CrazyFrog: FC = () => {
       try {
         window.navigator.vibrate(5);
       } catch (error) {
-        (window as any).Telegram.WebApp.HapticFeedback.impactOccurred("light");
+        if (supports("impactOccurred")) {
+          impactOccurred("light");
+        }
       }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
