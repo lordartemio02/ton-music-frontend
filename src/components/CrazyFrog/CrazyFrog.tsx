@@ -99,7 +99,7 @@ const CrazyFrog: FC = () => {
         offsetY = y - outerRef.current["offsetTop"];
       }
 
-      impactOccurred("light");
+      // impactOccurred("light");
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
