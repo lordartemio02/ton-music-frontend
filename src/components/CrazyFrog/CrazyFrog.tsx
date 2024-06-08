@@ -11,7 +11,7 @@ const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
   const { supports, impactOccurred } = useHapticFeedback();
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<any>({});
 
   const outerRef = useRef(null);
 
