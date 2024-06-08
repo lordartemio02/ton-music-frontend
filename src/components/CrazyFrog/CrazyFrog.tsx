@@ -146,7 +146,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      <div>{JSON.stringify(error)}</div>
+      <div>{JSON.stringify(error, null, 2)}</div>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
