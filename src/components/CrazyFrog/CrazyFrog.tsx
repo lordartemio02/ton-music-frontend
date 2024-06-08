@@ -10,8 +10,7 @@ import data from "../../mock/audiolist.json";
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  const { notificationOccurred, supports, impactOccurred } =
-    useHapticFeedback();
+  const { supports, impactOccurred } = useHapticFeedback();
 
   const outerRef = useRef(null);
 
