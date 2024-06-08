@@ -106,7 +106,7 @@ const CrazyFrog: FC = () => {
         try {
           impactOccurred("light");
         } catch (er) {
-          setError(er);
+          setError("error");
         }
       }
 
@@ -149,7 +149,7 @@ const CrazyFrog: FC = () => {
       <div className="flex flex-row" onClick={muteSound}>
         mute
       </div>
-      <div>{JSON.stringify(error, null, 2)}</div>
+      <div>{error}</div>
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
