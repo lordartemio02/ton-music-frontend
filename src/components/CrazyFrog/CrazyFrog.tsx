@@ -99,16 +99,16 @@ const CrazyFrog: FC = () => {
         offsetX = x - outerRef.current["offsetLeft"];
         offsetY = y - outerRef.current["offsetTop"];
       }
-
       try {
-        window.navigator.vibrate(5);
-      } catch (e) {
-        try {
-          notificationOccurred("success");
-        } catch (er) {
-          setError("error");
-        }
+        notificationOccurred("success");
+      } catch (er) {
+        setError("error");
       }
+      // try {
+      //   window.navigator.vibrate(5);
+      // } catch (e) {
+
+      // }
 
       setBlockPositions((prev: any) => [...prev, { x: offsetX, y: offsetY }]);
     }
