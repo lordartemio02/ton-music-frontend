@@ -7,6 +7,8 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
+@import "@telegram-apps/telegram-ui/dist/styles.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
