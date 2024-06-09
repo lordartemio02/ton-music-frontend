@@ -7,18 +7,24 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
+import { AppRoot } from "@telegram-apps/telegram-ui";
+import { StrictMode } from "react";
 import "./index.css";
 
 const manifestUrl = "https://ton-music.vercel.app/tonconnect-manifest.json";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <SDKProvider acceptCustomStyles>
-    <Provider store={store}>
-      <BrowserRouter>
-        <TonConnectUIProvider manifestUrl={manifestUrl}>
-          <App />
-        </TonConnectUIProvider>
-      </BrowserRouter>
-    </Provider>
-  </SDKProvider>
+  <StrictMode>
+    <SDKProvider acceptCustomStyles>
+      <Provider store={store}>
+        <BrowserRouter>
+          <TonConnectUIProvider manifestUrl={manifestUrl}>
+            <AppRoot>
+              <App />
+            </AppRoot>
+          </TonConnectUIProvider>
+        </BrowserRouter>
+      </Provider>
+    </SDKProvider>
+  </StrictMode>
 );

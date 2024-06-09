@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { NAME_AUDIO_INDEX } from "../../config";
 import musicList from "../../mock/audiolist.json";
 
 type TMusic = {
@@ -14,15 +15,17 @@ interface IMusicState {
   list: TMusic[];
   currentMusic: TMusic;
   isAutoplay?: boolean;
+  index: number;
 }
 
-const index = localStorage.getItem("audioIndex");
+const index = localStorage.getItem(NAME_AUDIO_INDEX);
 const parsedIndex = parseInt(index ?? "0", 10);
 
 const initialState: IMusicState = {
   list: musicList,
   currentMusic: musicList[parsedIndex],
   isAutoplay: false,
+  index: parsedIndex,
 };
 
 const musicSlice = createSlice({
@@ -42,9 +45,17 @@ const musicSlice = createSlice({
     ) => {
       state.isAutoplay = action.payload;
     },
+    setIndexMusic: (
+      state: IMusicState,
+      action: PayloadAction<IMusicState["index"]>
+    ) => {
+      localStorage.setItem(NAME_AUDIO_INDEX, action.payload.toString());
+      state.index = action.payload;
+    },
   },
 });
 
-export const { setCurrentMusic, setIsAutoplayMusic } = musicSlice.actions;
+export const { setCurrentMusic, setIsAutoplayMusic, setIndexMusic } =
+  musicSlice.actions;
 
 export default musicSlice.reducer;

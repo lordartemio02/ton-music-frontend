@@ -1,18 +1,21 @@
 import { FC, useEffect, useRef } from "react";
 import Slider, { Settings } from "react-slick";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { CloseIcon } from "../../assets/icons";
+import { CloseIcon, ShareOutlineIcon } from "../../assets/icons";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAudioTime } from "../../hooks/useAudioTime";
 import {
   setCurrentMusic,
+  setIndexMusic,
   setIsAutoplayMusic,
 } from "../../redux/state/musicSlice";
 import { convertSecondsToMinutesAndSeconds } from "../../utils";
 import Modal from "../Modal";
 import PlayerControl from "../PlayerControl";
 import { IModalPlayer } from "./ModalPlayer.interface";
+
+// TODO: Неиспользуемый компонент
 
 const ModalPlayer: FC<IModalPlayer> = ({
   handleClose,
@@ -23,28 +26,29 @@ const ModalPlayer: FC<IModalPlayer> = ({
   const dispatch = useAppDispatch();
   const listMusic = useAppSelector((state) => state.music.list);
   const currentMusic = useAppSelector((state) => state.music.currentMusic);
+  const indexMusic = useAppSelector((state) => state.music.index);
 
   const time = useAudioTime();
   const { duration } = useGlobalAudioPlayer();
 
   const settings: Settings = {
-    className: "center mt-10",
+    className: "mt-10",
     centerMode: true,
     infinite: false,
     centerPadding: "60px",
     slidesToShow: 1,
     speed: 500,
+    lazyLoad: "anticipated",
     beforeChange(_, nextSlide) {
-      localStorage.setItem("audioIndex", nextSlide.toString());
+      dispatch(setIndexMusic(nextSlide));
       dispatch(setCurrentMusic(listMusic[nextSlide]));
       dispatch(setIsAutoplayMusic(true));
     },
   };
 
   useEffect(() => {
-    const index = localStorage.getItem("audioIndex");
-    sliderRef.current?.slickGoTo(parseInt(index ?? "0", 10));
-  }, [isOpen]);
+    sliderRef.current?.slickGoTo(indexMusic, false);
+  }, [indexMusic, isOpen]);
 
   const onNext = () => {
     sliderRef.current?.slickNext();
@@ -85,10 +89,10 @@ const ModalPlayer: FC<IModalPlayer> = ({
                 {currentMusic.artist}
               </div>
             </div>
-            {/* <ShareOutlineIcon
+            <ShareOutlineIcon
               onClick={() => console.log("afsa")}
               className="cursor-pointer"
-            /> */}
+            />
           </div>
 
           <div className="flex flex-col">

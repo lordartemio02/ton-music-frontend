@@ -1,3 +1,4 @@
+import { Button } from "@telegram-apps/telegram-ui";
 import {
   useTonAddress,
   useTonConnectModal,
@@ -20,12 +21,9 @@ const ConnectWallet: FC = () => {
   };
 
   return (
-    <button
-      className="px-[10px] py-2 rounded-[30px] bg-[#007AFF] font-bold text-[13px] text-white max-w-[120px] truncate"
-      onClick={handleWalletOpenOrClose}
-    >
+    <Button size="s" onClick={handleWalletOpenOrClose}>
       {title}
-    </button>
+    </Button>
   );
 };
 
