@@ -1,6 +1,8 @@
 import {
   ErrorPage,
+  ExplorePage,
   HomePage,
+  PlayerPage,
   PlaylistPage,
   SearchPage,
   TasksPage,
@@ -29,6 +31,14 @@ export const authRoutes = [
   {
     path: "playlist",
     component: PlaylistPage,
+  },
+  {
+    path: "explore",
+    component: ExplorePage,
+  },
+  {
+    path: "player",
+    component: PlayerPage,
   },
   ...errorRoutes,
 ];
