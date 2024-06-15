@@ -1,7 +1,10 @@
 import { FC } from "react";
+import CellLarge from "../components/CellLarge";
+import CellSmall from "../components/CellSmall";
 import CustomTabsList from "../components/CustomTabsList";
 import { TabsDataListType } from "../components/CustomTabsList/CustomTabsList.interface";
 import WrapperBlock from "../components/WrapperBlock";
+import data from "../mock/dataAlbums.json";
 
 const ExplorePage: FC = () => {
   const handleClickPopularAlbums = () => {
@@ -42,23 +45,45 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="Popular albums"
-            onClick={handleClickPopularAlbums}
-          >
-            <h1>Popular albums</h1>
+            onClick={handleClickPopularAlbums}>
+            <>
+              <h1>Popular albums</h1>
+
+              {data.map((item) => (
+                <CellLarge
+                  id={item.id}
+                  desc={item.genre}
+                  onClick={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock title="Ton chart" onClick={handleClickTonChart}>
-            <h1>Ton chart</h1>
+            <>
+              <h1>Ton chart</h1>
+              {data.map((item) => (
+                <CellSmall
+                  id={item.id}
+                  onClick={() => {}}
+                  onClickIcon={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock
             title="top week artists"
-            onClick={handleClickTopWeekArtists}
-          >
+            onClick={handleClickTopWeekArtists}>
             <h1>top week artists</h1>
           </WrapperBlock>
           <WrapperBlock
             title="NEW albums by genres"
-            onClick={handleClickNewAlbumsByGenres}
-          >
+            onClick={handleClickNewAlbumsByGenres}>
             <h1>NEW albums by genres</h1>
           </WrapperBlock>
         </div>
@@ -70,8 +95,7 @@ const ExplorePage: FC = () => {
         <div>
           <WrapperBlock
             title="Based on your preferences"
-            onClick={handleClickBasedOnYourPreferences}
-          >
+            onClick={handleClickBasedOnYourPreferences}>
             <h1>Based on your preferences</h1>
           </WrapperBlock>
           <WrapperBlock title="Find new stars">
@@ -79,8 +103,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="New albums you will like"
-            onClick={handleClickNewAlbumsYouWillLike}
-          >
+            onClick={handleClickNewAlbumsYouWillLike}>
             <h1>New albums you will like</h1>
           </WrapperBlock>
           <WrapperBlock title="Recently listened to">

@@ -1,3 +1,4 @@
+import ArtistPage from "./ArtistPage";
 import BoostsPage from "./BoostsPage";
 import ErrorPage from "./ErrorPage";
 import ExplorePage from "./ExplorePage";
@@ -8,6 +9,7 @@ import SearchPage from "./SearchPage";
 import TasksPage from "./TasksPage";
 
 export {
+  ArtistPage,
   BoostsPage,
   ErrorPage,
   ExplorePage,

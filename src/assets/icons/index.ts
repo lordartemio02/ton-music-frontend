@@ -3,6 +3,7 @@ import BigPlayIcon from "./BigPlayIcon";
 import BigTonIcon from "./BigTonIcon";
 import CloseIcon from "./CloseIcon";
 import CrazyFrogIcon from "./CrazyFrogIcon";
+import EllipsisVertical from "./ellipsis-vertical.svg";
 import HeartIcon from "./HeartIcon";
 import NoAvatarUser from "./no-avatar-user.svg";
 import PauseIcon from "./pause.svg";
@@ -42,4 +43,5 @@ export {
   SkipFwdIcon,
   SongIcon,
   TasksIcon,
+  EllipsisVertical,
 };

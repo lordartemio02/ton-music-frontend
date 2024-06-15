@@ -1,0 +1,37 @@
+[
+  {
+    "avatar": "/images/1.png",
+    "id": "1",
+    "name": "Música Buena Para Días Malos",
+    "author": "Jay Wheeler",
+    "genre": "NEW AGE"
+  },
+  {
+    "avatar": "/images/2.png",
+    "id": "2",
+    "name": "Música Buena Para Días Malos",
+    "author": "Jay Wheeler",
+    "genre": "NEW AGE"
+  },
+  {
+    "avatar": "/images/3.png",
+    "id": "3",
+    "name": "Música Buena Para Días Malos",
+    "author": "Jay Wheeler",
+    "genre": "NEW AGE"
+  },
+  {
+    "avatar": "/images/4.png",
+    "id": "4",
+    "name": "Música Buena Para Días Malos",
+    "author": "Jay Wheeler",
+    "genre": "NEW AGE"
+  },
+  {
+    "avatar": "/images/5.png",
+    "id": "5",
+    "name": "Música Buena Para Días Malos",
+    "author": "Jay Wheeler",
+    "genre": "NEW AGE"
+  }
+]

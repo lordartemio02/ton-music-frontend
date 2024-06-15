@@ -4,7 +4,6 @@ import Header from "../Header";
 import Navigation from "../Navigation";
 import { ILayout } from "./Layout.interface";
 
-import { useViewport } from "@tma.js/sdk-react";
 import { useLocation } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -22,7 +21,7 @@ const Layout: FC<ILayout> = ({ children }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const viewport = useViewport();
+  // const viewport = useViewport();
 
   const currentMucsic = useAppSelector((state) => state.music.currentMusic);
   const listMusic = useAppSelector((state) => state.music.list);
@@ -81,9 +80,8 @@ const Layout: FC<ILayout> = ({ children }) => {
     <div
       className="bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto"
       style={{
-        height: viewport?.stableHeight ?? "100vh",
-      }}
-    >
+        height: "100vh",
+      }}>
       <Header />
       <main className={`flex-1 text-white mt-4 ${classNameMain}`}>
         {children}
