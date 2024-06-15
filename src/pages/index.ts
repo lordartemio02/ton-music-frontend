@@ -1,3 +1,4 @@
+import ArtistPage from "./ArtistPage";
 import ErrorPage from "./ErrorPage";
 import ExplorePage from "./ExplorePage";
 import HomePage from "./HomePage";
@@ -14,4 +15,5 @@ export {
   PlaylistPage,
   SearchPage,
   TasksPage,
+  ArtistPage,
 };

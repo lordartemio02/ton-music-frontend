@@ -1,4 +1,5 @@
 import {
+  ArtistPage,
   ErrorPage,
   ExplorePage,
   HomePage,
@@ -35,6 +36,10 @@ export const authRoutes = [
   {
     path: "explore",
     component: ExplorePage,
+  },
+  {
+    path: "artist",
+    component: ArtistPage,
   },
   {
     path: "player",
