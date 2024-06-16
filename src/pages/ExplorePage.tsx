@@ -3,8 +3,35 @@ import CellLarge from "../components/CellLarge";
 import CellSmall from "../components/CellSmall";
 import CustomTabsList from "../components/CustomTabsList";
 import { TabsDataListType } from "../components/CustomTabsList/CustomTabsList.interface";
+import ExploreSlide from "../components/ExploreSlide";
 import WrapperBlock from "../components/WrapperBlock";
 import data from "../mock/dataAlbums.json";
+
+import { Settings } from "react-slick";
+import audioList from "../mock/audiolist.json";
+
+const dataMock = audioList.slice(0, 15);
+
+const newReleaseSettings: Settings = {
+  infinite: true,
+  centerPadding: "60px",
+  centerMode: true,
+  slidesToShow: 1,
+};
+
+const newAlbumsSettings: Settings = {
+  infinite: true,
+  centerPadding: "60px",
+  centerMode: true,
+  slidesToShow: 2,
+};
+
+const topArtistsSettings: Settings = {
+  infinite: true,
+  centerPadding: "80px",
+  centerMode: true,
+  slidesToShow: 1,
+};
 
 const ExplorePage: FC = () => {
   const handleClickPopularAlbums = () => {
@@ -41,14 +68,18 @@ const ExplorePage: FC = () => {
       children: (
         <div>
           <WrapperBlock title="New releases" onClick={handleClickNewReleases}>
-            <h1>New releases</h1>
+            <ExploreSlide
+              data={dataMock}
+              settings={newReleaseSettings}
+              classNameImg="rounded-t-[24px]"
+              classNameFooter="rounded-b-[24px]"
+            />
           </WrapperBlock>
           <WrapperBlock
             title="Popular albums"
-            onClick={handleClickPopularAlbums}>
+            onClick={handleClickPopularAlbums}
+          >
             <>
-              <h1>Popular albums</h1>
-
               {data.map((item) => (
                 <CellLarge
                   id={item.id}
@@ -63,7 +94,6 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock title="Ton chart" onClick={handleClickTonChart}>
             <>
-              <h1>Ton chart</h1>
               {data.map((item) => (
                 <CellSmall
                   id={item.id}
@@ -78,13 +108,25 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="top week artists"
-            onClick={handleClickTopWeekArtists}>
-            <h1>top week artists</h1>
+            onClick={handleClickTopWeekArtists}
+          >
+            <ExploreSlide
+              data={dataMock}
+              settings={topArtistsSettings}
+              classNameImg="rounded-full"
+              classNameFooter="bg-transparent [&>div]:text-[15px] [&>div:last-child]:hidden text-center pt-1 pb-0"
+            />
           </WrapperBlock>
           <WrapperBlock
             title="NEW albums by genres"
-            onClick={handleClickNewAlbumsByGenres}>
-            <h1>NEW albums by genres</h1>
+            onClick={handleClickNewAlbumsByGenres}
+          >
+            <ExploreSlide
+              data={dataMock}
+              settings={newAlbumsSettings}
+              classNameImg="rounded-t-[12px]"
+              classNameFooter="rounded-b-[12px] [&>div]:text-[14px] [&>div:last-child]:hidden px-[10px] pt-2 pb-[10px]"
+            />
           </WrapperBlock>
         </div>
       ),
@@ -95,7 +137,8 @@ const ExplorePage: FC = () => {
         <div>
           <WrapperBlock
             title="Based on your preferences"
-            onClick={handleClickBasedOnYourPreferences}>
+            onClick={handleClickBasedOnYourPreferences}
+          >
             <h1>Based on your preferences</h1>
           </WrapperBlock>
           <WrapperBlock title="Find new stars">
@@ -103,7 +146,8 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="New albums you will like"
-            onClick={handleClickNewAlbumsYouWillLike}>
+            onClick={handleClickNewAlbumsYouWillLike}
+          >
             <h1>New albums you will like</h1>
           </WrapperBlock>
           <WrapperBlock title="Recently listened to">
