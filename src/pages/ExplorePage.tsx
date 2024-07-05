@@ -77,8 +77,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="Popular albums"
-            onClick={handleClickPopularAlbums}
-          >
+            onClick={handleClickPopularAlbums}>
             <>
               {data.map((item) => (
                 <CellLarge
@@ -108,8 +107,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="top week artists"
-            onClick={handleClickTopWeekArtists}
-          >
+            onClick={handleClickTopWeekArtists}>
             <ExploreSlide
               data={dataMock}
               settings={topArtistsSettings}
@@ -119,8 +117,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="NEW albums by genres"
-            onClick={handleClickNewAlbumsByGenres}
-          >
+            onClick={handleClickNewAlbumsByGenres}>
             <ExploreSlide
               data={dataMock}
               settings={newAlbumsSettings}
@@ -137,18 +134,38 @@ const ExplorePage: FC = () => {
         <div>
           <WrapperBlock
             title="Based on your preferences"
-            onClick={handleClickBasedOnYourPreferences}
-          >
-            <h1>Based on your preferences</h1>
+            onClick={handleClickBasedOnYourPreferences}>
+            <>
+              {data.map((item) => (
+                <CellSmall
+                  id={item.id}
+                  onClick={() => {}}
+                  onClickIcon={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock title="Find new stars">
             <h1>Find new stars</h1>
           </WrapperBlock>
           <WrapperBlock
             title="New albums you will like"
-            onClick={handleClickNewAlbumsYouWillLike}
-          >
-            <h1>New albums you will like</h1>
+            onClick={handleClickNewAlbumsYouWillLike}>
+            <>
+              {data.map((item) => (
+                <CellLarge
+                  id={item.id}
+                  desc={item.genre}
+                  onClick={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock title="Recently listened to">
             <h1>Recently listened to</h1>

@@ -10,7 +10,9 @@ const CellSmall: FC<CellSmallProps> = (props) => {
     <Cell
       key={id}
       onClick={onClick}
-      className={"p-0 gap-2 [--tgui--cell--middle--padding:8px]"}
+      className={
+        "p-0 gap-2 [--tgui--cell--middle--padding:8px] hover:bg-transparent"
+      }
       after={<EllipsisVertical onClick={onClickIcon} />}
       before={<Image size={40} src={imgUrl} />}
       subtitle={

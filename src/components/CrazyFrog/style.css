@@ -2,7 +2,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  animation: fade-up-and-out 2s ease-in-out;
+  animation: fade-up-and-out 1s ease-in-out;
 }
 
 @keyframes fade-up-and-out {

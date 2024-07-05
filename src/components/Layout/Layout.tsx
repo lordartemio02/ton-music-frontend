@@ -12,7 +12,7 @@ import {
   setCurrentMusic,
   setIndexMusic,
   setIsAutoplayMusic,
-} from "../../redux/state/musicSlice";
+} from "../../redux/slices/musicSlice";
 import ModalSwiper from "../ModalSwiper";
 
 const Layout: FC<ILayout> = ({ children }) => {

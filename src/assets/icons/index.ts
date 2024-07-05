@@ -1,6 +1,7 @@
 import BigPauseIcon from "./BigPauseIcon";
 import BigPlayIcon from "./BigPlayIcon";
 import BigTonIcon from "./BigTonIcon";
+import CloseCircleIcon from "./close-circle.svg";
 import CloseIcon from "./CloseIcon";
 import CrazyFrogIcon from "./CrazyFrogIcon";
 import EllipsisVertical from "./ellipsis-vertical.svg";
@@ -9,6 +10,7 @@ import NoAvatarUser from "./no-avatar-user.svg";
 import PauseIcon from "./pause.svg";
 import PlayIcon from "./play.svg";
 import PlaylistIcon from "./playlist.svg";
+import SearchInputIcon from "./search-input.svg";
 import SearchIcon from "./search.svg";
 import ShareOutlineIcon from "./share-outline.svg";
 import SongIcon from "./song.svg";
@@ -29,9 +31,11 @@ export {
   BoostIcon,
   CloseIcon,
   CrazyFrogIcon,
+  SearchInputIcon,
   HeartIcon,
   NoAvatarUser,
   PauseCircleIcon,
+  CloseCircleIcon,
   PauseIcon,
   PlayCircleIcon,
   PlayIcon,
