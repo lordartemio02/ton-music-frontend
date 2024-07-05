@@ -9,7 +9,7 @@ import {
   setCurrentMusic,
   setIndexMusic,
   setIsAutoplayMusic,
-} from "../../redux/state/musicSlice";
+} from "../../redux/slices/musicSlice";
 import { convertSecondsToMinutesAndSeconds } from "../../utils";
 import Modal from "../Modal";
 import PlayerControl from "../PlayerControl";

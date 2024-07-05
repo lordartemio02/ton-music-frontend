@@ -47,8 +47,6 @@ const ExplorePage: FC = () => {
             title="Popular albums"
             onClick={handleClickPopularAlbums}>
             <>
-              <h1>Popular albums</h1>
-
               {data.map((item) => (
                 <CellLarge
                   id={item.id}
@@ -63,7 +61,6 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock title="Ton chart" onClick={handleClickTonChart}>
             <>
-              <h1>Ton chart</h1>
               {data.map((item) => (
                 <CellSmall
                   id={item.id}
@@ -96,7 +93,18 @@ const ExplorePage: FC = () => {
           <WrapperBlock
             title="Based on your preferences"
             onClick={handleClickBasedOnYourPreferences}>
-            <h1>Based on your preferences</h1>
+            <>
+              {data.map((item) => (
+                <CellSmall
+                  id={item.id}
+                  onClick={() => {}}
+                  onClickIcon={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock title="Find new stars">
             <h1>Find new stars</h1>
@@ -104,7 +112,18 @@ const ExplorePage: FC = () => {
           <WrapperBlock
             title="New albums you will like"
             onClick={handleClickNewAlbumsYouWillLike}>
-            <h1>New albums you will like</h1>
+            <>
+              {data.map((item) => (
+                <CellLarge
+                  id={item.id}
+                  desc={item.genre}
+                  onClick={() => {}}
+                  subTitle={item.author}
+                  title={item.name}
+                  imgUrl={item.avatar}
+                />
+              ))}
+            </>
           </WrapperBlock>
           <WrapperBlock title="Recently listened to">
             <h1>Recently listened to</h1>

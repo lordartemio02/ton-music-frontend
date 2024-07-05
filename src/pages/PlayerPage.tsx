@@ -10,7 +10,7 @@ import {
   setCurrentMusic,
   setIndexMusic,
   setIsAutoplayMusic,
-} from "../redux/state/musicSlice";
+} from "../redux/slices/musicSlice";
 import { convertSecondsToMinutesAndSeconds } from "../utils";
 
 const PlayerPage: FC = () => {

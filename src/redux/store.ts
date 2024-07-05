@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { api } from "./api/api";
-import musicSlice from "./state/musicSlice";
+import reducerAuth from "./slices/authSlice";
+import musicSlice from "./slices/musicSlice";
 
 const rootReducer = combineReducers({
   music: musicSlice,
+  auth: reducerAuth,
   [api.reducerPath]: api.reducer,
 });
 

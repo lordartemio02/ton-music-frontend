@@ -10,7 +10,9 @@ const CellLarge: FC<CellLargeProps> = (props) => {
     <Cell
       key={id}
       onClick={onClick}
-      className={"p-0 gap-2 [--tgui--cell--middle--padding:8px]"}
+      className={
+        "p-0 gap-2 [--tgui--cell--middle--padding:8px] hover:bg-transparent"
+      }
       after={<Icon24ChevronRight className="text-linkColor" />}
       before={<Image className="!h-20 !w-20" src={imgUrl} />}
       description={
