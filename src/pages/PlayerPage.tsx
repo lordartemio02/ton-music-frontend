@@ -3,6 +3,7 @@ import Slider, { Settings } from "react-slick";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { ShareOutlineIcon } from "../assets/icons";
 import PlayerControl from "../components/PlayerControl";
+import { SLICK_SETTINGS } from "../config";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useAudioTime } from "../hooks/useAudioTime";
@@ -24,15 +25,11 @@ const PlayerPage: FC = () => {
   const { duration, seek } = useGlobalAudioPlayer();
 
   const settings: Settings = {
+    ...SLICK_SETTINGS,
     className: "mt-10",
     centerMode: true,
-    infinite: false,
     centerPadding: "60px",
     slidesToShow: 1,
-    speed: 500,
-    lazyLoad: "anticipated",
-    nextArrow: <></>,
-    prevArrow: <></>,
     beforeChange(_, nextSlide) {
       dispatch(setIndexMusic(nextSlide));
       dispatch(setCurrentMusic(listMusic[nextSlide]));
