@@ -1,8 +1,10 @@
 import { FC, useEffect, useRef, useState } from "react";
 
-import { CrazyFrogIcon } from "../../assets/icons";
+import { BoostIcon, CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
+import { Button } from "@telegram-apps/telegram-ui";
+import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import data from "../../mock/audiolist.json";
 
@@ -14,13 +16,12 @@ const CrazyFrog: FC = () => {
   // const [someError, setSomeError] = useState<any>("noError");
 
   const outerRef = useRef(null);
+  const navigate = useNavigate();
 
   const [blockPositions, setBlockPositions] = useState<any>([]);
-
   const [visible, setVisible] = useState(0);
 
   const { playing: playingGlobal } = useGlobalAudioPlayer();
-
   const { playing, load, play, pause, mute, muted } = useAudioPlayer();
 
   useEffect(() => {
@@ -146,10 +147,29 @@ const CrazyFrog: FC = () => {
     mute(!muted);
   };
 
+  const handleClickBoost = () => {
+    navigate("/boosts");
+  };
+
   return (
     <div>
-      <div className="flex flex-row" onClick={muteSound}>
-        mute
+      <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
+        <Button
+          onClick={muteSound}
+          before={<BoostIcon />}
+          mode="plain"
+          size="s"
+        >
+          Mute
+        </Button>
+        <Button
+          onClick={handleClickBoost}
+          before={<BoostIcon />}
+          mode="plain"
+          size="s"
+        >
+          Boost
+        </Button>
       </div>
       {/* <div>{someError}</div>
       <pre>{JSON.stringify(error, null, 2)}</pre> */}
@@ -157,7 +177,8 @@ const CrazyFrog: FC = () => {
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
         // onClick={handleClick}
-        onTouchStart={handleClick}>
+        onTouchStart={handleClick}
+      >
         <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
         <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
           <CrazyFrogIcon
@@ -170,7 +191,8 @@ const CrazyFrog: FC = () => {
           <div
             key={index}
             className="blocks z-[100] text-2xl"
-            style={{ left: x, top: y }}>
+            style={{ left: x, top: y }}
+          >
             +3
           </div>
         ))}

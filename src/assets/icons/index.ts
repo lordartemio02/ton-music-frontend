@@ -19,10 +19,14 @@ import PlayCircleIcon from "./play-circle.svg";
 import SkipBackIcon from "./skip-back.svg";
 import SkipFwdIcon from "./skip-fwd.svg";
 
+import BoostIcon from "./boost.svg";
+import PowerIcon from "./power.svg";
+
 export {
   BigPauseIcon,
   BigPlayIcon,
   BigTonIcon,
+  BoostIcon,
   CloseIcon,
   CrazyFrogIcon,
   HeartIcon,
@@ -32,6 +36,7 @@ export {
   PlayCircleIcon,
   PlayIcon,
   PlaylistIcon,
+  PowerIcon,
   SearchIcon,
   ShareOutlineIcon,
   SkipBackIcon,
