@@ -1,16 +1,29 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 
 import { BoostIcon, CrazyFrogIcon } from "../../assets/icons";
 import "./style.css";
 
 import { Button } from "@telegram-apps/telegram-ui";
+import { useInitData } from "@tma.js/sdk-react";
 import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
+import { useDebounce } from "../../hooks/useDebounce";
 import data from "../../mock/audiolist.json";
+import { SocketContext } from "../../socket/socket";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
+  const [countClick, setCountClick] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const initDataUser = useInitData();
+  const valueDebounce = useDebounce(countClick);
+  const [energy, setEnergy] = useState(0);
+
+  const [scaleBLur, setScaleBlur] = useState(0.2); // Начальный масштаб
+  const [isClicked, setIsClicked] = useState(false);
+
+  const socket = useContext(SocketContext);
+
   // const { notificationOccurred } = useHapticFeedback();
   // const [error, setError] = useState<any>({});
   // const [someError, setSomeError] = useState<any>("noError");
@@ -23,6 +36,29 @@ const CrazyFrog: FC = () => {
 
   const { playing: playingGlobal } = useGlobalAudioPlayer();
   const { playing, load, play, pause, mute, muted } = useAudioPlayer();
+
+  useEffect(() => {
+    if (valueDebounce !== 0) {
+      socket?.emit("click", {
+        telegramId: initDataUser?.user?.id,
+        amount: valueDebounce,
+      });
+      setCountClick(0);
+    }
+  }, [valueDebounce]);
+
+  useEffect(() => {
+    socket?.on("getUserClickerData", (data) => {
+      setEnergy(data.energy);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket?.on("click", (data) => {
+      setEnergy(data.energy);
+      localStorage.setItem("energy", data.energy.toString());
+    });
+  }, [socket]);
 
   useEffect(() => {
     const handleAnimationEnd = (e: any) => {
@@ -81,6 +117,8 @@ const CrazyFrog: FC = () => {
 
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
+    let count = 0;
+    let countEnergy = 0;
 
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
@@ -99,6 +137,8 @@ const CrazyFrog: FC = () => {
       ) {
         offsetX = x - outerRef.current["offsetLeft"];
         offsetY = y - outerRef.current["offsetTop"];
+
+        count += 1;
       }
       // try {
       //   notificationOccurred("success");
@@ -117,6 +157,7 @@ const CrazyFrog: FC = () => {
     }
 
     setScale(0.95);
+    setCountClick((prev) => prev + count);
 
     const lsDate = localStorage.getItem("date");
     if (!playingGlobal && !lsDate && !playing) {
@@ -141,6 +182,13 @@ const CrazyFrog: FC = () => {
       localStorage.setItem("money", `${parseInt(money) + 3}`);
       window.dispatchEvent(new Event("storage"));
     }
+
+    setIsClicked(true);
+    if (scaleBLur < 1) {
+      setScaleBlur(Math.min(scaleBLur + 0.2, 1)); // Увеличить масштаб при клике, но не более 1
+    }
+
+    // setEnergy();
   };
 
   const muteSound = () => {
@@ -151,23 +199,38 @@ const CrazyFrog: FC = () => {
     navigate("/boosts");
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isClicked && scaleBLur > 0.2) {
+        setScaleBlur(Math.max(scaleBLur - 0.1, 0.3)); // Сжимать блок, если кликов нет, но не меньше 0.2
+      }
+    }, 50); // Задержка для сжатия
+
+    return () => clearTimeout(timeout);
+  }, [isClicked, scaleBLur]);
+
+  useEffect(() => {
+    if (scaleBLur <= 0.2) {
+      setIsClicked(false); // Сбросить состояние, если блок сжался
+    }
+  }, [scaleBLur]);
+
   return (
     <div>
+      <span>{energy}</span>
       <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
         <Button
           onClick={muteSound}
           before={<BoostIcon />}
           mode="plain"
-          size="s"
-        >
+          size="s">
           Mute
         </Button>
         <Button
           onClick={handleClickBoost}
           before={<BoostIcon />}
           mode="plain"
-          size="s"
-        >
+          size="s">
           Boost
         </Button>
       </div>
@@ -176,10 +239,19 @@ const CrazyFrog: FC = () => {
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-        // onClick={handleClick}
-        onTouchStart={handleClick}
-      >
-        <div className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]" />
+        onTouchStart={handleClick}>
+        <div
+          style={{
+            transform: `scale(${scaleBLur})`,
+            filter: "blur(5px)",
+            width: "200px", // Ширина ограничена 200px
+            height: "200px", // Высота ограничена 200px
+          }}
+          className={
+            "overflow-hidden bg-[#B00FB4] transition-[transform 0.2s ease-in-out] absolute"
+          }
+          // className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]"
+        />
         <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
           <CrazyFrogIcon
             ref={ref}
@@ -191,8 +263,7 @@ const CrazyFrog: FC = () => {
           <div
             key={index}
             className="blocks z-[100] text-2xl"
-            style={{ left: x, top: y }}
-          >
+            style={{ left: x, top: y }}>
             +3
           </div>
         ))}

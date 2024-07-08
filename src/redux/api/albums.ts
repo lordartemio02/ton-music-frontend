@@ -5,20 +5,20 @@ import { api } from "./api";
 
 export const albumsApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    listAlbums: builder.query<DataResult<Album[]>, ListAlbumsParams>({
+    getListAlbums: builder.query<DataResult<Album[]>, ListAlbumsParams>({
       query: (params) => ({
         url: `albums`,
         method: "GET",
         params,
       }),
     }),
-    currentAlbum: builder.query<Album, IdT>({
+    getCurrentAlbum: builder.query<Album, IdT>({
       query: (body) => ({
         url: `albums/${body.id}`,
         method: "GET",
       }),
     }),
-    listTracksCurrentAlbums: builder.query<DataResult<Album[]>, IdT>({
+    getListTracksCurrentAlbums: builder.query<DataResult<Album[]>, IdT>({
       query: (body) => ({
         url: `albums/${body.id}/tracks`,
         method: "GET",
@@ -41,8 +41,8 @@ export const albumsApiSlice = api.injectEndpoints({
 
 export const {
   useAddFavoriteAlbumsMutation,
-  useCurrentAlbumQuery,
+  useGetCurrentAlbumQuery,
   useDeleteFavoriteAlbumsMutation,
-  useListAlbumsQuery,
-  useListTracksCurrentAlbumsQuery,
+  useGetListAlbumsQuery,
+  useGetListTracksCurrentAlbumsQuery,
 } = albumsApiSlice;

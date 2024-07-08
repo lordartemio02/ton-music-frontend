@@ -9,5 +9,5 @@ export type DataResultMeta<T> = {
 } & DataResult<T>;
 
 export type NewLest = {
-  is_newlest: boolean;
+  is_newlest?: boolean;
 };

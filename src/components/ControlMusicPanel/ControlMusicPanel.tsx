@@ -38,8 +38,7 @@ const ControlMusicPanel: FC = () => {
   return (
     <div
       className="relative rounded-lg p-2 bg-[#161A1D] flex items-center justify-between"
-      onClick={handleClickGlobalPlayer}
-    >
+      onClick={handleClickGlobalPlayer}>
       <div className="absolute -top-4 left-0 w-full px-[13px]">
         <ProgressBar
           min={0}

@@ -6,19 +6,19 @@ import { api } from "./api";
 
 export const playlistApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    listPlaylist: builder.query<DataResult<Playlist[]>, void>({
+    getListPlaylist: builder.query<DataResult<Playlist[]>, void>({
       query: () => ({
         url: `playlists`,
         method: "GET",
       }),
     }),
-    currentPlaylist: builder.query<Playlist, IdT>({
+    getCurrentPlaylist: builder.query<Playlist, IdT>({
       query: (body) => ({
         url: `playlists/${body.id}`,
         method: "GET",
       }),
     }),
-    listTracksCurrentPlaylist: builder.query<DataResultMeta<Track[]>, IdT>({
+    getListTracksCurrentPlaylist: builder.query<DataResultMeta<Track[]>, IdT>({
       query: (body) => ({
         url: `playlists/${body.id}/tracks`,
         method: "GET",
@@ -49,8 +49,8 @@ export const playlistApiSlice = api.injectEndpoints({
 export const {
   useAddFavoriteToPlaylistMutation,
   useAddToPlaylistMutation,
-  useCurrentPlaylistQuery,
+  useGetCurrentPlaylistQuery,
   useDeleteFavoriteOnPlaylistMutation,
-  useListPlaylistQuery,
-  useListTracksCurrentPlaylistQuery,
+  useGetListPlaylistQuery,
+  useGetListTracksCurrentPlaylistQuery,
 } = playlistApiSlice;

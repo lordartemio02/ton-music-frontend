@@ -1,9 +1,10 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import ControlMusicPanel from "../ControlMusicPanel";
 import Header from "../Header";
 import Navigation from "../Navigation";
 import { ILayout } from "./Layout.interface";
 
+import { useInitData } from "@tma.js/sdk-react";
 import { useLocation } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -13,6 +14,7 @@ import {
   setIndexMusic,
   setIsAutoplayMusic,
 } from "../../redux/slices/musicSlice";
+import { SocketContext } from "../../socket/socket";
 import ModalSwiper from "../ModalSwiper";
 
 const Layout: FC<ILayout> = ({ children }) => {
@@ -21,9 +23,12 @@ const Layout: FC<ILayout> = ({ children }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
+  const initData = useInitData();
+  const socket = useContext(SocketContext);
+
   // const viewport = useViewport();
 
-  const currentMucsic = useAppSelector((state) => state.music.currentMusic);
+  const currentMusic = useAppSelector((state) => state.music.currentMusic);
   const listMusic = useAppSelector((state) => state.music.list);
   const isAutoplay = useAppSelector((state) => state.music.isAutoplay);
   const indexMusic = useAppSelector((state) => state.music.index);
@@ -64,17 +69,29 @@ const Layout: FC<ILayout> = ({ children }) => {
   }, [dispatch, indexMusic, listMusic, seek, stop]);
 
   useEffect(() => {
-    load(currentMucsic.link, {
+    load(currentMusic.link, {
       autoplay: isAutoplay,
       html5: true,
       format: "mp3",
       onend: onEnd,
     });
-  }, [currentMucsic.link, isAutoplay, load, onEnd]);
+  }, [currentMusic.link, isAutoplay, load, onEnd]);
 
   const handleClose = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    socket?.on("connect", () => {
+      socket?.emit("getUserClickerData", {
+        telegramId: initData?.user?.id,
+      });
+      socket?.on("getUserClickerData", (data) => {
+        localStorage.setItem("money", data.money);
+        localStorage.setItem("energy", data.energy);
+      });
+    });
+  }, [socket]);
 
   return (
     <div
