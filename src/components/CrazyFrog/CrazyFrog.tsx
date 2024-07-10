@@ -1,20 +1,22 @@
 import { FC, useContext, useEffect, useRef, useState } from "react";
 
-import { BoostIcon, CrazyFrogIcon } from "../../assets/icons";
+import { BoostIcon, NotificationsIcon, TonIcon } from "../../assets/icons";
 import "./style.css";
 
 import { Button } from "@telegram-apps/telegram-ui";
-import { useInitData } from "@tma.js/sdk-react";
 import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import { useDebounce } from "../../hooks/useDebounce";
 import data from "../../mock/audiolist.json";
 import { SocketContext } from "../../socket/socket";
 
+import { useInitData } from "@tma.js/sdk-react";
+import crazyFrogImg from "../../assets/imgs/crazy-frog.png";
+
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const [countClick, setCountClick] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLImageElement>(null);
   const initDataUser = useInitData();
   const valueDebounce = useDebounce(countClick);
   const [energy, setEnergy] = useState(0);
@@ -216,30 +218,42 @@ const CrazyFrog: FC = () => {
   }, [scaleBLur]);
 
   return (
-    <div>
-      <span>{energy}</span>
-      <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
-        <Button
-          onClick={muteSound}
-          before={<BoostIcon />}
-          mode="plain"
-          size="s">
-          Mute
-        </Button>
-        <Button
-          onClick={handleClickBoost}
-          before={<BoostIcon />}
-          mode="plain"
-          size="s">
-          Boost
-        </Button>
+    <div className="w-full h-full flex flex-col justify-between">
+      <div>
+        <div className="flex items-center justify-between">
+          <div className="text-[15px]">{energy}</div>
+          <div className="text-[15px]">+2 / second</div>
+        </div>
+        <div className="bg-[#AAAAAA] w-full h-[3px] rounded-[10px] overflow-hidden mt-1.5">
+          <div className="bg-[#32E55E] h-full w-1/2" />
+        </div>
+        <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
+          <Button
+            onClick={muteSound}
+            before={<NotificationsIcon />}
+            mode="plain"
+            size="s"
+            className="px-0"
+          >
+            Mute
+          </Button>
+          <Button
+            onClick={handleClickBoost}
+            before={<BoostIcon />}
+            mode="plain"
+            size="s"
+            className="px-0"
+          >
+            Boost
+          </Button>
+        </div>
       </div>
-      {/* <div>{someError}</div>
-      <pre>{JSON.stringify(error, null, 2)}</pre> */}
+
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-        onTouchStart={handleClick}>
+        onTouchStart={handleClick}
+      >
         <div
           style={{
             transform: `scale(${scaleBLur})`,
@@ -253,20 +267,30 @@ const CrazyFrog: FC = () => {
           // className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]"
         />
         <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
-          <CrazyFrogIcon
+          <img
             ref={ref}
+            src={crazyFrogImg}
+            alt="tonmusic crazy frog"
+            className="h-[250px]"
             style={{ transform: `scale(${scale})` }}
-            className="w-full"
           />
         </div>
         {blockPositions.map(({ x, y }: any, index: number) => (
           <div
             key={index}
             className="blocks z-[100] text-2xl"
-            style={{ left: x, top: y }}>
+            style={{ left: x, top: y }}
+          >
             +3
           </div>
         ))}
+      </div>
+
+      <div className="flex flex-col items-center justify-center">
+        <Button mode="bezeled" before={<TonIcon />} size="s">
+          Ton Music Wave
+        </Button>
+        <div className="text-[#AAAAAA] text-[10px]">Apache - Bvrnout</div>
       </div>
     </div>
   );
