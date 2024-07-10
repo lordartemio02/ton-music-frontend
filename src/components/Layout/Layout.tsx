@@ -9,13 +9,18 @@ import { useLocation } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { onSetMoney } from "../../redux/slices/clickerSlice";
+import {
+  onSetLvlClick,
+  onSetLvlMining,
+  onSetMoney,
+} from "../../redux/slices/clickerSlice";
 import {
   setCurrentMusic,
   setIndexMusic,
   setIsAutoplayMusic,
 } from "../../redux/slices/musicSlice";
 import { SocketContext } from "../../socket/socket";
+import { getMiningRate } from "../../utils/getMiningRate";
 import ModalSwiper from "../ModalSwiper";
 
 const Layout: FC<ILayout> = ({ children }) => {
@@ -51,7 +56,8 @@ const Layout: FC<ILayout> = ({ children }) => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      dispatch(onSetMoney(clicker.money + 3));
+      const countPerSecond = getMiningRate(clicker.lvlMining);
+      dispatch(onSetMoney(clicker.money + countPerSecond));
     }, 1000);
 
     return () => clearInterval(id);
@@ -100,6 +106,16 @@ const Layout: FC<ILayout> = ({ children }) => {
       socket?.on("getUserClickerData", (data) => {
         localStorage.setItem("energy", data.energy);
         dispatch(onSetMoney(data.coins));
+        dispatch(onSetLvlMining(data.auto_tap_level));
+        dispatch(onSetLvlClick(data.tap_level));
+      });
+      socket?.on("buyBoostAutoTap", (data) => {
+        dispatch(onSetMoney(data.coins));
+        dispatch(onSetLvlMining(data.auto_tap_level));
+      });
+      socket?.on("buyBoostTap", (data) => {
+        dispatch(onSetMoney(data.coins));
+        dispatch(onSetLvlClick(data.tap_level));
       });
     });
   }, [socket]);
@@ -109,8 +125,7 @@ const Layout: FC<ILayout> = ({ children }) => {
       className="bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto"
       style={{
         height: "100vh",
-      }}
-    >
+      }}>
       <Header />
       <main className={`flex-1 text-white mt-4 ${classNameMain}`}>
         {children}

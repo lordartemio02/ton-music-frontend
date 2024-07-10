@@ -164,7 +164,7 @@ const CrazyFrog: FC = () => {
     }
 
     setScale(0.95);
-    setCountClick((prev) => prev + count);
+    setCountClick((prev) => prev + count * clicker.lvlClick);
     dispatch(onSetMoney(clicker.money + count));
 
     const lsDate = localStorage.getItem("date");
