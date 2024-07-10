@@ -98,7 +98,8 @@ const Layout: FC<ILayout> = ({ children }) => {
       className="bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto"
       style={{
         height: "100vh",
-      }}>
+      }}
+    >
       <Header />
       <main className={`flex-1 text-white mt-4 ${classNameMain}`}>
         {children}
