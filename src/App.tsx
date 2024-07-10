@@ -23,33 +23,6 @@ const App: FC = () => {
   });
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const money = localStorage.getItem("money");
-      const energy = localStorage.getItem("energy");
-      const countManning = localStorage.getItem("countManning");
-      if (money) {
-        localStorage.setItem(
-          "money",
-          (Number(money) + Number(countManning ?? 3)).toString()
-        );
-      } else {
-        localStorage.setItem("money", Number(countManning ?? 3).toString());
-      }
-
-      if (energy) {
-        localStorage.setItem(
-          "energy",
-          (Number(money) + Number(countManning ?? 3)).toString()
-        );
-      } else {
-        localStorage.setItem("energy", Number(countManning ?? 3).toString());
-      }
-    }, 1_000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
     dispatch(onTokenAccess(JSON.stringify(initData)));
     window.onbeforeunload = function () {
       return true;

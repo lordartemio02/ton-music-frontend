@@ -179,17 +179,8 @@ const CrazyFrog: FC = () => {
       setScale(1);
       clearTimeout(id);
     }, 20);
-    const money = localStorage.getItem("money");
 
     localStorage.setItem("date", `${Date.now()}`);
-
-    if (!money) {
-      localStorage.setItem("money", "3");
-      window.dispatchEvent(new Event("storage"));
-    } else {
-      localStorage.setItem("money", `${parseInt(money) + 3}`);
-      window.dispatchEvent(new Event("storage"));
-    }
 
     setIsClicked(true);
     if (scaleBLur < 1) {
