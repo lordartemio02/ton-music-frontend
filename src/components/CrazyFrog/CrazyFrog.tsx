@@ -120,7 +120,6 @@ const CrazyFrog: FC = () => {
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
     let count = 0;
-    let countEnergy = 0;
 
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];

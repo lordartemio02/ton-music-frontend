@@ -28,7 +28,7 @@ const ArtistPage: FC = () => {
   };
 
   const handleClickPopularTrack = (id: string) => {
-    console.log("handleClickShare");
+    console.log("handleClickShare", id);
   };
 
   return (
