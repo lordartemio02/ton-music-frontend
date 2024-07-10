@@ -1,5 +1,4 @@
 import { FC } from "react";
-import "swiper/css";
 import CrazyFrog from "../components/CrazyFrog";
 import "./index.css";
 

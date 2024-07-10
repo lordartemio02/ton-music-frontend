@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect, useRef, useState } from "react";
 
-import { BoostIcon, CrazyFrogIcon } from "../../assets/icons";
+import { BoostIcon, NotificationsIcon, TonIcon } from "../../assets/icons";
 import "./style.css";
 
 import { Button } from "@telegram-apps/telegram-ui";
@@ -14,10 +14,12 @@ import data from "../../mock/audiolist.json";
 import { onSetMoney } from "../../redux/slices/clickerSlice";
 import { SocketContext } from "../../socket/socket";
 
+import crazyFrogImg from "../../assets/imgs/crazy-frog.png";
+
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
   const [countClick, setCountClick] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLImageElement>(null);
   const initDataUser = useInitData();
   const valueDebounce = useDebounce(countClick);
   const [energy, setEnergy] = useState(0);
@@ -124,7 +126,6 @@ const CrazyFrog: FC = () => {
   const handleClick = (e: any) => {
     setVisible((prevVisible) => prevVisible + 1);
     let count = 0;
-    let countEnergy = 0;
 
     for (let i = 0; i < e.touches.length; i++) {
       const touch = e.touches[i];
@@ -223,26 +224,35 @@ const CrazyFrog: FC = () => {
   }, [scaleBLur]);
 
   return (
-    <div>
-      <span>{energy}</span>
-      <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
-        <Button
-          onClick={muteSound}
-          before={<BoostIcon />}
-          mode="plain"
-          size="s">
-          Mute
-        </Button>
-        <Button
-          onClick={handleClickBoost}
-          before={<BoostIcon />}
-          mode="plain"
-          size="s">
-          Boost
-        </Button>
+    <div className="w-full h-full flex flex-col justify-between">
+      <div>
+        <div className="flex items-center justify-between">
+          <div className="text-[15px]">{energy}</div>
+          <div className="text-[15px]">+2 / second</div>
+        </div>
+        <div className="bg-[#AAAAAA] w-full h-[3px] rounded-[10px] overflow-hidden mt-1.5">
+          <div className="bg-[#32E55E] h-full w-1/2" />
+        </div>
+        <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
+          <Button
+            onClick={muteSound}
+            before={<NotificationsIcon />}
+            mode="plain"
+            size="s"
+            className="px-0">
+            Mute
+          </Button>
+          <Button
+            onClick={handleClickBoost}
+            before={<BoostIcon />}
+            mode="plain"
+            size="s"
+            className="px-0">
+            Boost
+          </Button>
+        </div>
       </div>
-      {/* <div>{someError}</div>
-      <pre>{JSON.stringify(error, null, 2)}</pre> */}
+
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
@@ -260,10 +270,12 @@ const CrazyFrog: FC = () => {
           // className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]"
         />
         <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
-          <CrazyFrogIcon
+          <img
             ref={ref}
+            src={crazyFrogImg}
+            alt="tonmusic crazy frog"
+            className="h-[250px]"
             style={{ transform: `scale(${scale})` }}
-            className="w-full"
           />
         </div>
         {blockPositions.map(({ x, y }: any, index: number) => (
@@ -274,6 +286,13 @@ const CrazyFrog: FC = () => {
             +3
           </div>
         ))}
+      </div>
+
+      <div className="flex flex-col items-center justify-center">
+        <Button mode="bezeled" before={<TonIcon />} size="s">
+          Ton Music Wave
+        </Button>
+        <div className="text-[#AAAAAA] text-[10px]">Apache - Bvrnout</div>
       </div>
     </div>
   );
