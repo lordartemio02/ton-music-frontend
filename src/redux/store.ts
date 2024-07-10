@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { api } from "./api/api";
 import reducerAuth from "./slices/authSlice";
+import clickerSlice from "./slices/clickerSlice";
 import musicSlice from "./slices/musicSlice";
 
 const rootReducer = combineReducers({
   music: musicSlice,
+  clicker: clickerSlice,
   auth: reducerAuth,
   [api.reducerPath]: api.reducer,
 });

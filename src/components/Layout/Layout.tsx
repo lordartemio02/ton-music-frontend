@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { onSetMoney } from "../../redux/slices/clickerSlice";
 import {
   setCurrentMusic,
   setIndexMusic,
@@ -33,6 +34,8 @@ const Layout: FC<ILayout> = ({ children }) => {
   const isAutoplay = useAppSelector((state) => state.music.isAutoplay);
   const indexMusic = useAppSelector((state) => state.music.index);
 
+  const clicker = useAppSelector((state) => state.clicker);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isShowMusicPanel, setIsShowMusicPanel] = useState(true);
 
@@ -45,6 +48,14 @@ const Layout: FC<ILayout> = ({ children }) => {
       setIsShowMusicPanel(true);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      dispatch(onSetMoney(clicker.money + 3));
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (!localStorage.getItem("modal")) {
@@ -87,8 +98,8 @@ const Layout: FC<ILayout> = ({ children }) => {
         telegramId: initData?.user?.id,
       });
       socket?.on("getUserClickerData", (data) => {
-        localStorage.setItem("money", data.money);
         localStorage.setItem("energy", data.energy);
+        dispatch(onSetMoney(data.coins));
       });
     });
   }, [socket]);

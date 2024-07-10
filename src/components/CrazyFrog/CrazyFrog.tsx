@@ -5,10 +5,13 @@ import "./style.css";
 
 import { Button } from "@telegram-apps/telegram-ui";
 import { useInitData } from "@tma.js/sdk-react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { useDebounce } from "../../hooks/useDebounce";
 import data from "../../mock/audiolist.json";
+import { onSetMoney } from "../../redux/slices/clickerSlice";
 import { SocketContext } from "../../socket/socket";
 
 const CrazyFrog: FC = () => {
@@ -18,9 +21,11 @@ const CrazyFrog: FC = () => {
   const initDataUser = useInitData();
   const valueDebounce = useDebounce(countClick);
   const [energy, setEnergy] = useState(0);
+  const dispatch = useDispatch();
 
   const [scaleBLur, setScaleBlur] = useState(0.2); // Начальный масштаб
   const [isClicked, setIsClicked] = useState(false);
+  const clicker = useAppSelector((state) => state.clicker);
 
   const socket = useContext(SocketContext);
 
@@ -50,6 +55,7 @@ const CrazyFrog: FC = () => {
   useEffect(() => {
     socket?.on("getUserClickerData", (data) => {
       setEnergy(data.energy);
+      dispatch(onSetMoney(data.coins));
     });
   }, [socket]);
 
@@ -158,6 +164,7 @@ const CrazyFrog: FC = () => {
 
     setScale(0.95);
     setCountClick((prev) => prev + count);
+    dispatch(onSetMoney(clicker.money + count));
 
     const lsDate = localStorage.getItem("date");
     if (!playingGlobal && !lsDate && !playing) {
