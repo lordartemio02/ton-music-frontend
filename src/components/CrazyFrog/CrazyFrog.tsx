@@ -117,7 +117,10 @@ const CrazyFrog: FC = () => {
     });
   }, []);
 
+  // TODO: Возможен баг с кликами (-1)
   const handleClick = (e: any) => {
+    if (energy <= 0) return;
+
     setVisible((prevVisible) => prevVisible + 1);
     let count = 0;
 
@@ -256,14 +259,14 @@ const CrazyFrog: FC = () => {
         <div
           style={{
             transform: `scale(${scaleBLur})`,
-            filter: "blur(5px)",
-            width: "200px", // Ширина ограничена 200px
-            height: "200px", // Высота ограничена 200px
+            filter: "blur(40px)",
+            translate: "-50% -50%",
+            width: "250px", // Ширина ограничена 200px
+            height: "250px", // Высота ограничена 200px
           }}
           className={
-            "overflow-hidden bg-[#B00FB4] transition-[transform 0.2s ease-in-out] absolute"
+            "overflow-hidden bg-[#B00FB4] transition-[transform 0.2s ease-in-out] absolute left-1/2 top-1/2 rounded-full"
           }
-          // className="bg-[#B00FB4] w-full h-[250px] rounded-[170px] absolute top-0 left-0 blur-[40px]"
         />
         <div className="flex items-center justify-center gap-[10px] rounded-[46px] absolute z-10 left-1/2 -translate-x-1/2 w-full">
           <img
