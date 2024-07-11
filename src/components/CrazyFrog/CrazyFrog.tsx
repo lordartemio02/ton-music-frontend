@@ -55,13 +55,6 @@ const CrazyFrog: FC = () => {
   }, [valueDebounce]);
 
   useEffect(() => {
-    socket?.on("getUserClickerData", (data) => {
-      setEnergy(data.energy);
-      dispatch(onSetMoney(data.coins));
-    });
-  }, [socket]);
-
-  useEffect(() => {
     socket?.on("click", (data) => {
       setEnergy(data.energy);
       localStorage.setItem("energy", data.energy.toString());
