@@ -117,7 +117,10 @@ const CrazyFrog: FC = () => {
     });
   }, []);
 
+  // TODO: Возможен баг с кликами (-1)
   const handleClick = (e: any) => {
+    if (energy <= 0) return;
+
     setVisible((prevVisible) => prevVisible + 1);
     let count = 0;
 
