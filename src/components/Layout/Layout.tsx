@@ -10,8 +10,11 @@ import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
+  onSetEnergy,
+  onSetLvlBarEnergy,
   onSetLvlClick,
   onSetLvlMining,
+  onSetLvlRegenEnergy,
   onSetMoney,
 } from "../../redux/slices/clickerSlice";
 import {
@@ -39,7 +42,11 @@ const Layout: FC<ILayout> = ({ children }) => {
   const isAutoplay = useAppSelector((state) => state.music.isAutoplay);
   const indexMusic = useAppSelector((state) => state.music.index);
 
-  const clicker = useAppSelector((state) => state.clicker);
+  const lvlClick = useAppSelector((state) => state.clicker.lvlClick);
+  const lvlMining = useAppSelector((state) => state.clicker.lvlMining);
+  const money = useAppSelector((state) => state.clicker.money);
+  const energy = useAppSelector((state) => state.clicker.energy);
+  const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isShowMusicPanel, setIsShowMusicPanel] = useState(true);
@@ -56,12 +63,16 @@ const Layout: FC<ILayout> = ({ children }) => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      const countPerSecond = getMiningRate(clicker.lvlMining);
-      dispatch(onSetMoney(clicker.money + countPerSecond));
+      const maxEnergy = 500 + lvlBarEnergy * 500;
+      const countPerSecond = getMiningRate(lvlMining);
+      dispatch(onSetMoney(money + countPerSecond));
+
+      if (energy >= maxEnergy) return;
+      dispatch(onSetEnergy(energy + 1));
     }, 1000);
 
     return () => clearInterval(id);
-  }, []);
+  }, [money, energy, lvlClick, lvlMining, lvlBarEnergy]);
 
   useEffect(() => {
     if (!localStorage.getItem("modal")) {
@@ -103,15 +114,29 @@ const Layout: FC<ILayout> = ({ children }) => {
       socket?.emit("getUserClickerData", {
         telegramId: initData?.user?.id,
       });
+      socket?.on("click", (data) => {
+        dispatch(onSetEnergy(data.energy));
+        dispatch(onSetMoney(data.coins));
+      });
       socket?.on("getUserClickerData", (data) => {
-        localStorage.setItem("energy", data.energy);
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlMining(data.auto_tap_level));
         dispatch(onSetLvlClick(data.tap_level));
+        dispatch(onSetEnergy(data.energy));
+        dispatch(onSetLvlBarEnergy(data.energy_bar_level));
+        dispatch(onSetLvlRegenEnergy(data.energy_regeneration_level));
       });
       socket?.on("buyBoostAutoTap", (data) => {
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlMining(data.auto_tap_level));
+      });
+      socket?.on("buyBoostEnergyBar", (data) => {
+        dispatch(onSetLvlBarEnergy(data.energy_bar_level));
+        dispatch(onSetMoney(data.coins));
+      });
+      socket?.on("buyBoostEnergyPerSecond", (data) => {
+        dispatch(onSetLvlRegenEnergy(data.energy_regeneration_level));
+        dispatch(onSetMoney(data.coins));
       });
       socket?.on("buyBoostTap", (data) => {
         dispatch(onSetMoney(data.coins));
@@ -125,7 +150,8 @@ const Layout: FC<ILayout> = ({ children }) => {
       className="bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto"
       style={{
         height: "100vh",
-      }}>
+      }}
+    >
       <Header />
       <main className={`flex-1 text-white mt-4 ${classNameMain}`}>
         {children}

@@ -16,6 +16,7 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const initData = useInitData();
   const initDataUser = window.Telegram?.WebApp.initData;
+
   const socket = useSocketio(wsUri, {
     autoConnect: true,
     transports: ["websocket", "polling"],

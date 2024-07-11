@@ -5,16 +5,16 @@ import "./style.css";
 
 import { Button } from "@telegram-apps/telegram-ui";
 import { useInitData } from "@tma.js/sdk-react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useDebounce } from "../../hooks/useDebounce";
 import data from "../../mock/audiolist.json";
-import { onSetMoney } from "../../redux/slices/clickerSlice";
+import { onSetEnergy, onSetMoney } from "../../redux/slices/clickerSlice";
 import { SocketContext } from "../../socket/socket";
 
 import crazyFrogImg from "../../assets/imgs/crazy-frog.png";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 const CrazyFrog: FC = () => {
   const [scale, setScale] = useState(1);
@@ -22,18 +22,26 @@ const CrazyFrog: FC = () => {
   const ref = useRef<HTMLImageElement>(null);
   const initDataUser = useInitData();
   const valueDebounce = useDebounce(countClick);
-  const [energy, setEnergy] = useState(0);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [scaleBLur, setScaleBlur] = useState(0.2); // Начальный масштаб
   const [isClicked, setIsClicked] = useState(false);
-  const clicker = useAppSelector((state) => state.clicker);
+
+  const money = useAppSelector((state) => state.clicker.money);
+  const lvlClick = useAppSelector((state) => state.clicker.lvlClick);
+  const energy = useAppSelector((state) => state.clicker.energy);
+  const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
+  const lvlRegenEnergy = useAppSelector(
+    (state) => state.clicker.lvlRegenEnergy
+  );
 
   const socket = useContext(SocketContext);
 
   // const { notificationOccurred } = useHapticFeedback();
   // const [error, setError] = useState<any>({});
   // const [someError, setSomeError] = useState<any>("noError");
+
+  const maxEnergy = 500 + lvlBarEnergy * 500;
 
   const outerRef = useRef(null);
   const navigate = useNavigate();
@@ -52,14 +60,7 @@ const CrazyFrog: FC = () => {
       });
       setCountClick(0);
     }
-  }, [valueDebounce]);
-
-  useEffect(() => {
-    socket?.on("click", (data) => {
-      setEnergy(data.energy);
-      localStorage.setItem("energy", data.energy.toString());
-    });
-  }, [socket]);
+  }, [valueDebounce, socket]);
 
   useEffect(() => {
     const handleAnimationEnd = (e: any) => {
@@ -157,8 +158,9 @@ const CrazyFrog: FC = () => {
     }
 
     setScale(0.95);
-    setCountClick((prev) => prev);
-    dispatch(onSetMoney(clicker.money + count * clicker.lvlClick));
+    setCountClick((prev) => prev + count);
+    dispatch(onSetMoney(money + count * lvlClick));
+    dispatch(onSetEnergy(energy - 1));
 
     const lsDate = localStorage.getItem("date");
     if (!playingGlobal && !lsDate && !playing) {
@@ -211,11 +213,18 @@ const CrazyFrog: FC = () => {
     <div className="w-full h-full flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between">
-          <div className="text-[15px]">{energy}</div>
-          <div className="text-[15px]">+2 / second</div>
+          <div className="text-[15px]">
+            {energy} / {maxEnergy}
+          </div>
+          <div className="text-[15px]">+{lvlRegenEnergy} / second</div>
         </div>
         <div className="bg-[#AAAAAA] w-full h-[3px] rounded-[10px] overflow-hidden mt-1.5">
-          <div className="bg-[#32E55E] h-full w-1/2" />
+          <div
+            className="bg-[#32E55E] h-full"
+            style={{
+              width: `${(energy / maxEnergy) * 100}%`,
+            }}
+          />
         </div>
         <div className="text-[15px] text-[#2990FF] flex items-center justify-between">
           <Button
@@ -223,7 +232,8 @@ const CrazyFrog: FC = () => {
             before={<NotificationsIcon />}
             mode="plain"
             size="s"
-            className="px-0">
+            className="px-0"
+          >
             Mute
           </Button>
           <Button
@@ -231,7 +241,8 @@ const CrazyFrog: FC = () => {
             before={<BoostIcon />}
             mode="plain"
             size="s"
-            className="px-0">
+            className="px-0"
+          >
             Boost
           </Button>
         </div>
@@ -240,7 +251,8 @@ const CrazyFrog: FC = () => {
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-        onTouchStart={handleClick}>
+        onTouchStart={handleClick}
+      >
         <div
           style={{
             transform: `scale(${scaleBLur})`,
@@ -266,7 +278,8 @@ const CrazyFrog: FC = () => {
           <div
             key={index}
             className="blocks z-[100] text-2xl"
-            style={{ left: x, top: y }}>
+            style={{ left: x, top: y }}
+          >
             +3
           </div>
         ))}
