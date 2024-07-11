@@ -16,17 +16,17 @@ const Navigation: FC = () => {
           to={item.path}
           className={({ isActive }) =>
             `w-[74px] py-[10px] flex flex-col justify-center items-center text-[10px] font-semibold gap-3 ${
-              isActive ? "text-white" : "text-[#707579]"
-            } ${item?.disabled ? "text-[#707579]/70" : ""}`
+              isActive ? "text-buttonColor" : "text-secondaryHintColor"
+            } ${item?.disabled ? "text-[#707579]/75" : ""}`
           }
         >
           {({ isActive }) => (
             <>
               {
                 <item.Img
-                  className={`${isActive ? "fill-white" : "fill-[#707579]"} ${
-                    item?.disabled ? "fill-[#707579]/70" : ""
-                  }`}
+                  className={`${
+                    isActive ? "fill-buttonColor" : "fill-secondaryHintColor"
+                  } ${item?.disabled ? "fill-[#707579]/75" : ""}`}
                 />
               }
               <div>{item.title}</div>
