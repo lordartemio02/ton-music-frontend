@@ -6,14 +6,14 @@ import { api } from "./api";
 
 export const tracksApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    listTracks: builder.query<DataResultMeta<Track[]>, TracksParams>({
+    getListTracks: builder.query<DataResultMeta<Track[]>, TracksParams>({
       query: (params) => ({
         url: `tracks`,
         method: "GET",
         params,
       }),
     }),
-    tracksRec: builder.query<DataResult<Track[]>, void>({
+    getTracksRec: builder.query<DataResult<Track[]>, void>({
       query: () => ({
         url: `tracks/recommendation`,
         method: "GET",
@@ -47,6 +47,6 @@ export const {
   useAddFavoriteTrackMutation,
   useAddToPlaylistTrackMutation,
   useDeleteFavoriteTrackMutation,
-  useListTracksQuery,
-  useTracksRecQuery,
+  useGetListTracksQuery,
+  useGetTracksRecQuery,
 } = tracksApiSlice;

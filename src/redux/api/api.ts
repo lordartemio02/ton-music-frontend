@@ -6,7 +6,7 @@ export const staticApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: VITE_APP_BASE_URL_API,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
       const token = window.Telegram?.WebApp.initData;
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
@@ -16,7 +16,7 @@ export const staticApi = createApi({
     },
     credentials: "include",
   }),
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });
 
 export const api = staticApi.enhanceEndpoints({ addTagTypes: [] });

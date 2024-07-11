@@ -5,14 +5,14 @@ import { api } from "./api";
 
 export const artistApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    listArtist: builder.query<DataResultMeta<Artist[]>, NewLest>({
+    getListArtist: builder.query<DataResultMeta<Artist[]>, NewLest>({
       query: (params) => ({
         url: `artists`,
         method: "GET",
         params,
       }),
     }),
-    currentArtist: builder.query<Artist, IdT>({
+    getCurrentArtist: builder.query<Artist, IdT>({
       query: (body) => ({
         url: `artists/${body.id}`,
         method: "GET",
@@ -35,7 +35,7 @@ export const artistApiSlice = api.injectEndpoints({
 
 export const {
   useAddFavoriteArtistMutation,
-  useCurrentArtistQuery,
+  useGetCurrentArtistQuery,
   useDeleteFavoriteArtistMutation,
-  useListArtistQuery,
+  useGetListArtistQuery,
 } = artistApiSlice;
