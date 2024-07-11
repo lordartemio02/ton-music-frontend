@@ -283,7 +283,7 @@ const CrazyFrog: FC = () => {
             className="blocks z-[100] text-2xl"
             style={{ left: x, top: y }}
           >
-            +3
+            +{lvlClick}
           </div>
         ))}
       </div>
