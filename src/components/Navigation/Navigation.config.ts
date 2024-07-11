@@ -1,30 +1,31 @@
-import {
-  PlaylistIcon,
-  SearchIcon,
-  SongIcon,
-  TasksIcon,
-} from "../../assets/icons";
+import { NavIcons } from "../../assets/icons";
 
 export const navigationList = [
   {
-    Img: SongIcon,
+    Img: NavIcons.GlobeIcon,
     title: "Home",
     path: "/",
   },
   {
-    Img: PlaylistIcon,
-    title: "Playlist",
-    path: "/playlist",
+    Img: NavIcons.ExploreIcon,
+    title: "Explore",
+    path: "/explore",
+    disabled: true,
   },
   {
-    Img: TasksIcon,
-    title: "Tasks",
-    path: "/tasks",
+    Img: NavIcons.LightBulbIcon,
+    title: "Earn",
+    path: "/boosts",
   },
   {
-    Img: SearchIcon,
+    Img: NavIcons.SearchIcon,
     title: "Search",
     path: "/search",
     disabled: true,
+  },
+  {
+    Img: NavIcons.FolderIcon,
+    title: "Playlist",
+    path: "/playlist",
   },
 ];

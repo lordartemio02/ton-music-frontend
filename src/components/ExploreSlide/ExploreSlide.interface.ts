@@ -1,5 +1,5 @@
 import { Settings } from "react-slick";
-import { IAudioList } from "../../interface/AudioList.interface";
+import { IAudioList } from "../../interfaces/AudioList.interface";
 
 export interface IExploreSlide {
   settings?: Settings;

@@ -5,11 +5,8 @@ import HeartIcon from "./HeartIcon";
 import NoAvatarUser from "./no-avatar-user.svg";
 import PauseIcon from "./pause.svg";
 import PlayIcon from "./play.svg";
-import PlaylistIcon from "./playlist.svg";
 import SearchInputIcon from "./search-input.svg";
-import SearchIcon from "./search.svg";
 import ShareOutlineIcon from "./share-outline.svg";
-import SongIcon from "./song.svg";
 import StarsIcon from "./stars.svg";
 import TasksIcon from "./tasks.svg";
 
@@ -24,6 +21,7 @@ import PowerIcon from "./power.svg";
 import TonIcon from "./ton.svg";
 
 import * as DucksIcons from "./ducks";
+import * as NavIcons from "./nav";
 
 export {
   BoostIcon,
@@ -32,20 +30,18 @@ export {
   DucksIcons,
   EllipsisVertical,
   HeartIcon,
+  NavIcons,
   NoAvatarUser,
   NotificationsIcon,
   PauseCircleIcon,
   PauseIcon,
   PlayCircleIcon,
   PlayIcon,
-  PlaylistIcon,
   PowerIcon,
-  SearchIcon,
   SearchInputIcon,
   ShareOutlineIcon,
   SkipBackIcon,
   SkipFwdIcon,
-  SongIcon,
   StarsIcon,
   TasksIcon,
   TonIcon,
