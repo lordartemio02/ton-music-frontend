@@ -10,6 +10,8 @@ import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
+  onSetAutoClickCost,
+  onSetClickCost,
   onSetEnergy,
   onSetLvlBarEnergy,
   onSetLvlClick,
@@ -126,10 +128,13 @@ const Layout: FC<ILayout> = ({ children }) => {
         dispatch(onSetEnergy(data.energy));
         dispatch(onSetLvlBarEnergy(data.energy_bar_level));
         dispatch(onSetLvlRegenEnergy(data.energy_regeneration_level));
+        dispatch(onSetAutoClickCost(data.values.upgrade_auto_click_cost));
+        dispatch(onSetClickCost(data.values.upgrade_click_cost));
       });
       socket?.on("buyBoostAutoTap", (data) => {
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlMining(data.auto_tap_level));
+        dispatch(onSetAutoClickCost(data.values.upgrade_auto_click_cost));
       });
       socket?.on("buyBoostEnergyBar", (data) => {
         dispatch(onSetLvlBarEnergy(data.energy_bar_level));
@@ -142,6 +147,7 @@ const Layout: FC<ILayout> = ({ children }) => {
       socket?.on("buyBoostTap", (data) => {
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlClick(data.tap_level));
+        dispatch(onSetClickCost(data.values.upgrade_click_cost));
       });
     });
   }, [socket]);

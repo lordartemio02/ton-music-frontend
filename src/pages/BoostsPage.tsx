@@ -1,9 +1,10 @@
 import { Button, Modal, Placeholder } from "@telegram-apps/telegram-ui";
 import { useInitData } from "@tma.js/sdk-react";
 import { createElement, FC, useContext, useMemo } from "react";
-import { PowerIcon } from "../assets/icons";
+import { EnergyIcon, MiningIcon, PowerIcon } from "../assets/icons";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { SocketContext } from "../socket/socket";
+import { getMiningRatePerHour } from "../utils/getMiningRate";
 
 const BoostsPage: FC = () => {
   const socket = useContext(SocketContext);
@@ -13,29 +14,37 @@ const BoostsPage: FC = () => {
   const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
   const lvlClick = useAppSelector((state) => state.clicker.lvlClick);
   const lvlMining = useAppSelector((state) => state.clicker.lvlMining);
+  const money = useAppSelector((state) => state.clicker.money);
+  const autoClickCost = useAppSelector(
+    (state) => state.clicker.upgradeAutoClickCost
+  );
+  const upgradeClickCost = useAppSelector(
+    (state) => state.clicker.upgradeClickCost
+  );
 
   const boostList = useMemo(
     () => [
       {
         title: "Power",
-        subtitle: "Add +1 per click",
-        description: "+1 per click when increasing the level",
+        subtitle: `Add +${lvlClick} per click`,
+        description: `+${lvlClick + 1} per click when increasing the level`,
         level: lvlClick,
-        boost: "5 000",
+        boost: upgradeClickCost,
         icon: PowerIcon,
         onClick: () => {
           socket?.emit("buyBoostTap", {
             telegramId: initData?.user?.id,
           });
         },
+        disabled: upgradeClickCost > money,
       },
       {
         title: "Energy",
-        subtitle: "Add +1 to enegy",
+        subtitle: "Add +1 to energy",
         description: "+1 to energy when increasing the level",
         level: lvlBarEnergy,
         boost: "5 000",
-        icon: PowerIcon,
+        icon: EnergyIcon,
         onClick: () => {
           socket?.emit("buyBoostEnergyBar", {
             telegramId: initData?.user?.id,
@@ -44,16 +53,21 @@ const BoostsPage: FC = () => {
       },
       {
         title: "Mining",
-        subtitle: "Add +1 per second",
-        description: "+1 per second when increasing the level",
+        subtitle: `Add +${Math.round(
+          getMiningRatePerHour(lvlMining)
+        )} per hour`,
+        description: `+${Math.round(
+          getMiningRatePerHour(lvlMining + 1)
+        )} per hour when increasing the level`,
         level: lvlMining,
-        boost: "5 000",
-        icon: PowerIcon,
+        boost: autoClickCost,
+        icon: MiningIcon,
         onClick: () => {
           socket?.emit("buyBoostAutoTap", {
             telegramId: initData?.user?.id,
           });
         },
+        disabled: autoClickCost > money,
       },
     ],
     [lvlClick, lvlMining, lvlBarEnergy, initData?.user?.id, socket]
@@ -100,7 +114,11 @@ const BoostsPage: FC = () => {
                   {boost.level} level
                 </div>
               </div>
-              <Button onClick={boost.onClick} className="w-full" size="l">
+              <Button
+                disabled={boost.disabled}
+                onClick={boost.onClick}
+                className="w-full"
+                size="l">
                 Up
               </Button>
             </Placeholder>

@@ -7,6 +7,8 @@ export interface ClickerState {
   lvlClick: number;
   lvlBarEnergy: number;
   lvlRegenEnergy: number;
+  upgradeAutoClickCost: number;
+  upgradeClickCost: number;
 }
 
 const initialState: ClickerState = {
@@ -16,6 +18,8 @@ const initialState: ClickerState = {
   lvlClick: 1,
   lvlBarEnergy: 1,
   lvlRegenEnergy: 1,
+  upgradeAutoClickCost: 0,
+  upgradeClickCost: 0,
 };
 
 export const clickerSlice = createSlice({
@@ -58,6 +62,18 @@ export const clickerSlice = createSlice({
     ) => {
       state.lvlRegenEnergy = action.payload;
     },
+    onSetAutoClickCost: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["upgradeAutoClickCost"]>
+    ) => {
+      state.upgradeAutoClickCost = action.payload;
+    },
+    onSetClickCost: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["upgradeClickCost"]>
+    ) => {
+      state.upgradeClickCost = action.payload;
+    },
   },
 });
 
@@ -69,6 +85,8 @@ export const {
   onSetEnergy,
   onSetLvlBarEnergy,
   onSetLvlRegenEnergy,
+  onSetAutoClickCost,
+  onSetClickCost,
 } = clickerSlice.actions;
 
 export default clickerSlice.reducer;

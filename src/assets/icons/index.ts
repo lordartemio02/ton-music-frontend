@@ -16,6 +16,8 @@ import SkipBackIcon from "./skip-back.svg";
 import SkipFwdIcon from "./skip-fwd.svg";
 
 import BoostIcon from "./boost.svg";
+import EnergyIcon from "./energy.svg";
+import MiningIcon from "./mining.svg";
 import NotificationsIcon from "./notifications.svg";
 import PowerIcon from "./power.svg";
 import TonIcon from "./ton.svg";
@@ -35,6 +37,8 @@ export {
   NotificationsIcon,
   PauseCircleIcon,
   PauseIcon,
+  EnergyIcon,
+  MiningIcon,
   PlayCircleIcon,
   PlayIcon,
   PowerIcon,
