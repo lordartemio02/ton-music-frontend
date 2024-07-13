@@ -66,11 +66,11 @@ const BoostsPage: FC = () => {
           <Modal
             key={`boost-${index}`}
             header={
-              <div className="text-center text-[--tgui--text_color] text-[17px] font-semibold py-[19px]">
-                {boost.title}
+              <div className="text-center relative text-white text-[17px] font-semibold py-[19px]">
+                <span>{boost.title}</span>
               </div>
             }
-            className="z-50"
+            className="z-50 bg-[#2A2A2A]"
             trigger={
               <div className="bg-[#383838] rounded-[14px] px-[14px] py-[10px] flex items-center justify-between gap-[14px]">
                 <div className="flex items-center gap-[14px]">
@@ -85,11 +85,10 @@ const BoostsPage: FC = () => {
                 </div>
                 <div className="text-[#55A6FF] text-[17px]">Boost</div>
               </div>
-            }
-          >
+            }>
             <Placeholder>
               {createElement(boost.icon, { className: "w-[125px] h-[125px]" })}
-              <div className="text-[17px]">{boost.subtitle}</div>
+              <div className="text-[17px] text-white">{boost.subtitle}</div>
               <div className="text-[17px] text-[--tgui--hint_color]">
                 {boost.description}
               </div>
