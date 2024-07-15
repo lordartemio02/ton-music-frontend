@@ -16,7 +16,7 @@ export const actionCardsList = [
     path: "/",
   },
   {
-    title: "Invite friens",
+    title: "Invite friends",
     subtitle: "+10 TONM",
     img: usersGroupImg,
     onClick: () => {
@@ -32,6 +32,7 @@ export const actionCardsList = [
     subtitle: "Just listening to mus",
     img: musicImg,
     className: "bg-[#B00FB4]",
+    onClick: () => {},
     path: "/",
   },
   {

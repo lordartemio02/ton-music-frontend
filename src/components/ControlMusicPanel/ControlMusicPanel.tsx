@@ -3,12 +3,15 @@ import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { PauseIcon, PlayIcon } from "../../assets/icons";
 import { useAudioTime } from "../../hooks/useAudioTime";
 
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import ProgressBar from "../ProgressBar";
 
 const ControlMusicPanel: FC = () => {
   const navigate = useNavigate();
+
+  const eventBuilder = useTWAEvent();
 
   const currentMusic = useAppSelector((state) => state.music.currentMusic);
 
@@ -17,6 +20,10 @@ const ControlMusicPanel: FC = () => {
 
   const handleClickGlobalPlayer = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+    eventBuilder.track("Button Clicked", {
+      label: "Open player full page", // Additional info about the button
+      category: "Open player", // Categorize the event
+    });
     navigate("/player");
   };
 
@@ -30,6 +37,12 @@ const ControlMusicPanel: FC = () => {
   const handleTogglePlayPause = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
+      if (!playing) {
+        eventBuilder.track("Button Clicked", {
+          label: "Start music from Player section", // Additional info about the button
+          category: "Start music", // Categorize the event
+        });
+      }
       togglePlayPause();
     },
     [togglePlayPause]

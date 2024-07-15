@@ -7,8 +7,11 @@ export interface ClickerState {
   lvlClick: number;
   lvlBarEnergy: number;
   lvlRegenEnergy: number;
+  upgradeEnergyPerSecondCost: number;
   upgradeAutoClickCost: number;
   upgradeClickCost: number;
+  miningRatePerHour: number;
+  miningRatePerSecond: number;
 }
 
 const initialState: ClickerState = {
@@ -20,6 +23,9 @@ const initialState: ClickerState = {
   lvlRegenEnergy: 1,
   upgradeAutoClickCost: 0,
   upgradeClickCost: 0,
+  miningRatePerHour: 0,
+  miningRatePerSecond: 0,
+  upgradeEnergyPerSecondCost: 0,
 };
 
 export const clickerSlice = createSlice({
@@ -74,6 +80,24 @@ export const clickerSlice = createSlice({
     ) => {
       state.upgradeClickCost = action.payload;
     },
+    onSetMiningPerSecond: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["miningRatePerSecond"]>
+    ) => {
+      state.miningRatePerSecond = action.payload;
+    },
+    onSetMiningPerHour: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["miningRatePerHour"]>
+    ) => {
+      state.miningRatePerHour = action.payload;
+    },
+    onSetUpgradeEnergyCost: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["upgradeEnergyPerSecondCost"]>
+    ) => {
+      state.upgradeEnergyPerSecondCost = action.payload;
+    },
   },
 });
 
@@ -87,6 +111,9 @@ export const {
   onSetLvlRegenEnergy,
   onSetAutoClickCost,
   onSetClickCost,
+  onSetMiningPerHour,
+  onSetMiningPerSecond,
+  onSetUpgradeEnergyCost,
 } = clickerSlice.actions;
 
 export default clickerSlice.reducer;

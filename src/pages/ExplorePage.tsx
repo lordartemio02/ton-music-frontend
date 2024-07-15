@@ -7,9 +7,9 @@ import ExploreSlide from "../components/ExploreSlide";
 import WrapperBlock from "../components/WrapperBlock";
 import data from "../mock/dataAlbums.json";
 
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import { Settings } from "react-slick";
 import audioList from "../mock/audiolist.json";
-import { useGetListAlbumsQuery } from "../redux/api/albums";
 
 const dataMock = audioList.slice(0, 15);
 
@@ -35,29 +35,45 @@ const topArtistsSettings: Settings = {
 };
 
 const ExplorePage: FC = () => {
-  const { data: popularAlbums } = useGetListAlbumsQuery({
-    is_popular: 1,
-  });
-
-  console.log(popularAlbums?.data);
+  const eventBuilder = useTWAEvent();
 
   const handleClickPopularAlbums = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "Popular albums page", // Additional info about the button
+      category: "Popular albums page", // Categorize the event
+    });
     console.log("handleClickPopularAlbums");
   };
 
   const handleClickNewReleases = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "New releases page", // Additional info about the button
+      category: "New releases page", // Categorize the event
+    });
     console.log("handleClickNewReleases");
   };
 
   const handleClickTonChart = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "Ton charts page", // Additional info about the button
+      category: "Ton charts page", // Categorize the event
+    });
     console.log("handleClickTonChart");
   };
 
   const handleClickTopWeekArtists = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "Top week artists page", // Additional info about the button
+      category: "Top week artists page", // Categorize the event
+    });
     console.log("handleClickTopWeekArtists");
   };
 
   const handleClickNewAlbumsByGenres = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "New albums by genres page", // Additional info about the button
+      category: "New albums by genres page", // Categorize the event
+    });
     console.log("handleClickNewAlbumsByGenres");
   };
 
@@ -84,8 +100,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="Popular albums"
-            onClick={handleClickPopularAlbums}
-          >
+            onClick={handleClickPopularAlbums}>
             <>
               {data.map((item) => (
                 <CellLarge
@@ -115,8 +130,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="top week artists"
-            onClick={handleClickTopWeekArtists}
-          >
+            onClick={handleClickTopWeekArtists}>
             <ExploreSlide
               data={dataMock}
               settings={topArtistsSettings}
@@ -126,8 +140,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="NEW albums by genres"
-            onClick={handleClickNewAlbumsByGenres}
-          >
+            onClick={handleClickNewAlbumsByGenres}>
             <ExploreSlide
               data={dataMock}
               settings={newAlbumsSettings}
@@ -144,8 +157,7 @@ const ExplorePage: FC = () => {
         <div>
           <WrapperBlock
             title="Based on your preferences"
-            onClick={handleClickBasedOnYourPreferences}
-          >
+            onClick={handleClickBasedOnYourPreferences}>
             <>
               {data.map((item) => (
                 <CellSmall
@@ -164,8 +176,7 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="New albums you will like"
-            onClick={handleClickNewAlbumsYouWillLike}
-          >
+            onClick={handleClickNewAlbumsYouWillLike}>
             <>
               {data.map((item) => (
                 <CellLarge
