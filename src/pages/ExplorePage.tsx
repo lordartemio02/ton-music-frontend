@@ -9,6 +9,7 @@ import data from "../mock/dataAlbums.json";
 
 import { Settings } from "react-slick";
 import audioList from "../mock/audiolist.json";
+import { useGetListAlbumsQuery } from "../redux/api/albums";
 
 const dataMock = audioList.slice(0, 15);
 
@@ -34,6 +35,12 @@ const topArtistsSettings: Settings = {
 };
 
 const ExplorePage: FC = () => {
+  const { data: popularAlbums } = useGetListAlbumsQuery({
+    is_popular: 1,
+  });
+
+  console.log(popularAlbums?.data);
+
   const handleClickPopularAlbums = () => {
     console.log("handleClickPopularAlbums");
   };
@@ -77,7 +84,8 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="Popular albums"
-            onClick={handleClickPopularAlbums}>
+            onClick={handleClickPopularAlbums}
+          >
             <>
               {data.map((item) => (
                 <CellLarge
@@ -107,7 +115,8 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="top week artists"
-            onClick={handleClickTopWeekArtists}>
+            onClick={handleClickTopWeekArtists}
+          >
             <ExploreSlide
               data={dataMock}
               settings={topArtistsSettings}
@@ -117,7 +126,8 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="NEW albums by genres"
-            onClick={handleClickNewAlbumsByGenres}>
+            onClick={handleClickNewAlbumsByGenres}
+          >
             <ExploreSlide
               data={dataMock}
               settings={newAlbumsSettings}
@@ -134,7 +144,8 @@ const ExplorePage: FC = () => {
         <div>
           <WrapperBlock
             title="Based on your preferences"
-            onClick={handleClickBasedOnYourPreferences}>
+            onClick={handleClickBasedOnYourPreferences}
+          >
             <>
               {data.map((item) => (
                 <CellSmall
@@ -153,7 +164,8 @@ const ExplorePage: FC = () => {
           </WrapperBlock>
           <WrapperBlock
             title="New albums you will like"
-            onClick={handleClickNewAlbumsYouWillLike}>
+            onClick={handleClickNewAlbumsYouWillLike}
+          >
             <>
               {data.map((item) => (
                 <CellLarge
