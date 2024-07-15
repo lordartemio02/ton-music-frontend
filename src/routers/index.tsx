@@ -1,6 +1,7 @@
 import {
   ArtistPage,
   BoostsPage,
+  EarnPage,
   ErrorPage,
   ExplorePage,
   HomePage,
@@ -37,6 +38,10 @@ export const authRoutes = [
   {
     path: "explore",
     component: ExplorePage,
+  },
+  {
+    path: "earn",
+    component: EarnPage,
   },
   {
     path: "artist",

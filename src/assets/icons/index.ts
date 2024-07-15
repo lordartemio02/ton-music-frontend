@@ -22,11 +22,15 @@ import NotificationsIcon from "./notifications.svg";
 import PowerIcon from "./power.svg";
 import TonIcon from "./ton.svg";
 
+import CalendarIcon from "./calendar.svg";
+import PlayMoneySmallIcon from "./play-money-small.svg";
+
 import * as DucksIcons from "./ducks";
 import * as NavIcons from "./nav";
 
 export {
   BoostIcon,
+  CalendarIcon,
   CloseCircleIcon,
   CloseIcon,
   DucksIcons,
@@ -41,6 +45,7 @@ export {
   MiningIcon,
   PlayCircleIcon,
   PlayIcon,
+  PlayMoneySmallIcon,
   PowerIcon,
   SearchInputIcon,
   ShareOutlineIcon,

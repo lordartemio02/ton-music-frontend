@@ -15,7 +15,7 @@ export const navigationList = [
   {
     Img: NavIcons.LightBulbIcon,
     title: "Earn",
-    path: "/boosts",
+    path: "/earn",
   },
   {
     Img: NavIcons.SearchIcon,
