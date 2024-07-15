@@ -51,9 +51,6 @@ const Layout: FC<ILayout> = ({ children }) => {
   const money = useAppSelector((state) => state.clicker.money);
   const energy = useAppSelector((state) => state.clicker.energy);
   const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
-  const miningRatePerHour = useAppSelector(
-    (state) => state.clicker.miningRatePerHour
-  );
   const miningRatePerSecond = useAppSelector(
     (state) => state.clicker.miningRatePerSecond
   );
