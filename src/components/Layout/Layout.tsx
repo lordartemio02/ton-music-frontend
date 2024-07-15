@@ -17,7 +17,10 @@ import {
   onSetLvlClick,
   onSetLvlMining,
   onSetLvlRegenEnergy,
+  onSetMiningPerHour,
+  onSetMiningPerSecond,
   onSetMoney,
+  onSetUpgradeEnergyCost,
 } from "../../redux/slices/clickerSlice";
 import {
   setCurrentMusic,
@@ -25,7 +28,6 @@ import {
   setIsAutoplayMusic,
 } from "../../redux/slices/musicSlice";
 import { SocketContext } from "../../socket/socket";
-import { getMiningRate } from "../../utils/getMiningRate";
 import ModalSwiper from "../ModalSwiper";
 
 const Layout: FC<ILayout> = ({ children }) => {
@@ -49,6 +51,12 @@ const Layout: FC<ILayout> = ({ children }) => {
   const money = useAppSelector((state) => state.clicker.money);
   const energy = useAppSelector((state) => state.clicker.energy);
   const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
+  const miningRatePerHour = useAppSelector(
+    (state) => state.clicker.miningRatePerHour
+  );
+  const miningRatePerSecond = useAppSelector(
+    (state) => state.clicker.miningRatePerSecond
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const [isShowMusicPanel, setIsShowMusicPanel] = useState(true);
@@ -66,16 +74,15 @@ const Layout: FC<ILayout> = ({ children }) => {
   useEffect(() => {
     const id = setInterval(() => {
       const maxEnergy = 500 + lvlBarEnergy * 500;
-      const countPerSecond = getMiningRate(lvlMining);
 
-      dispatch(onSetMoney(money + countPerSecond));
+      dispatch(onSetMoney(money + miningRatePerSecond));
 
       if (energy >= maxEnergy) return;
       dispatch(onSetEnergy(energy + 1));
     }, 1000);
 
     return () => clearInterval(id);
-  }, [money, energy, lvlClick, lvlMining, lvlBarEnergy]);
+  }, [money, energy, lvlClick, lvlMining, lvlBarEnergy, miningRatePerSecond]);
 
   useEffect(() => {
     if (!localStorage.getItem("modal")) {
@@ -130,11 +137,16 @@ const Layout: FC<ILayout> = ({ children }) => {
         dispatch(onSetLvlRegenEnergy(data.energy_regeneration_level));
         dispatch(onSetAutoClickCost(data.values.upgrade_auto_click_cost));
         dispatch(onSetClickCost(data.values.upgrade_click_cost));
+        dispatch(onSetMiningPerHour(data.values.mining_rate_per_hour));
+        dispatch(onSetMiningPerSecond(data.values.mining_rate_per_second));
+        dispatch(onSetUpgradeEnergyCost(data.values.upgrade_energy_per_second));
       });
       socket?.on("buyBoostAutoTap", (data) => {
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlMining(data.auto_tap_level));
         dispatch(onSetAutoClickCost(data.values.upgrade_auto_click_cost));
+        dispatch(onSetMiningPerHour(data.values.mining_rate_per_hour));
+        dispatch(onSetMiningPerSecond(data.values.mining_rate_per_second));
       });
       socket?.on("buyBoostEnergyBar", (data) => {
         dispatch(onSetLvlBarEnergy(data.energy_bar_level));
@@ -154,7 +166,7 @@ const Layout: FC<ILayout> = ({ children }) => {
 
   return (
     <div
-      className="bg-black flex flex-col w-full px-4 pt-1 overflow-y-auto"
+      className="bg-black flex flex-col w-full px-4 pt-2 overflow-y-auto"
       style={{
         height: "100vh",
       }}>

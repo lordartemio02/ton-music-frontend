@@ -13,6 +13,7 @@ import data from "../../mock/audiolist.json";
 import { onSetEnergy, onSetMoney } from "../../redux/slices/clickerSlice";
 import { SocketContext } from "../../socket/socket";
 
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import crazyFrogImg from "../../assets/imgs/crazy-frog.png";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
@@ -23,6 +24,8 @@ const CrazyFrog: FC = () => {
   const initDataUser = useInitData();
   const valueDebounce = useDebounce(countClick);
   const dispatch = useAppDispatch();
+
+  const eventBuilder = useTWAEvent();
 
   const [scaleBLur, setScaleBlur] = useState(0.2); // Начальный масштаб
   const [isClicked, setIsClicked] = useState(false);
@@ -185,6 +188,11 @@ const CrazyFrog: FC = () => {
       setScaleBlur(Math.min(scaleBLur + 0.2, 1)); // Увеличить масштаб при клике, но не более 1
     }
 
+    eventBuilder.track("Button Clicked", {
+      label: "Tap Crazy Frog", // Additional info about the button
+      category: "Clicker Tap", // Categorize the event
+    });
+
     // setEnergy();
   };
 
@@ -193,6 +201,10 @@ const CrazyFrog: FC = () => {
   };
 
   const handleClickBoost = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "Boosts page open", // Additional info about the button
+      category: "Boost page", // Categorize the event
+    });
     navigate("/boosts");
   };
 
@@ -211,6 +223,13 @@ const CrazyFrog: FC = () => {
       setIsClicked(false); // Сбросить состояние, если блок сжался
     }
   }, [scaleBLur]);
+
+  const onClickWave = () => {
+    eventBuilder.track("Button Clicked", {
+      label: "Ton Music Wave button", // Additional info about the button
+      category: "Wave button", // Categorize the event
+    });
+  };
 
   return (
     <div className="w-full h-full flex flex-col justify-between">
@@ -235,8 +254,7 @@ const CrazyFrog: FC = () => {
             before={<NotificationsIcon />}
             mode="plain"
             size="s"
-            className="px-0"
-          >
+            className="px-0">
             Mute
           </Button>
           <Button
@@ -244,8 +262,7 @@ const CrazyFrog: FC = () => {
             before={<BoostIcon />}
             mode="plain"
             size="s"
-            className="px-0"
-          >
+            className="px-0">
             Boost
           </Button>
         </div>
@@ -254,8 +271,7 @@ const CrazyFrog: FC = () => {
       <div
         ref={outerRef}
         className="relative w-auto rounded-[170px] h-[250px] cursor-pointer"
-        onTouchStart={handleClick}
-      >
+        onTouchStart={handleClick}>
         <div
           style={{
             transform: `scale(${scaleBLur})`,
@@ -281,15 +297,18 @@ const CrazyFrog: FC = () => {
           <div
             key={index}
             className="blocks z-[100] text-2xl"
-            style={{ left: x, top: y }}
-          >
+            style={{ left: x, top: y }}>
             +{lvlClick}
           </div>
         ))}
       </div>
 
       <div className="flex flex-col items-center justify-center">
-        <Button mode="bezeled" before={<TonIcon />} size="s">
+        <Button
+          mode="bezeled"
+          before={<TonIcon />}
+          size="s"
+          onClick={onClickWave}>
           Ton Music Wave
         </Button>
         <div className="text-[#AAAAAA] text-[10px]">Apache - Bvrnout</div>

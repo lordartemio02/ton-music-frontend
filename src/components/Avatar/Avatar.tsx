@@ -4,7 +4,7 @@ import { IAvatar } from "./Avatar.interface";
 
 const Avatar: FC<IAvatar> = ({ src }) => {
   return (
-    <div className="w-6 h-6 rounded-full overflow-hidden bg-white flex justify-center items-center">
+    <div className="w-7 h-7 rounded-full overflow-hidden bg-white flex justify-center items-center">
       {!src ? (
         <NoAvatarUser />
       ) : (

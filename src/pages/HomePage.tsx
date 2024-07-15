@@ -4,7 +4,7 @@ import "./index.css";
 
 const HomePage: FC = () => {
   return (
-    <div className="h-[calc(100vh-192px)] flex flex-col justify-center">
+    <div className="h-[calc(100vh-260px)] flex flex-col justify-center">
       <CrazyFrog />
     </div>
   );

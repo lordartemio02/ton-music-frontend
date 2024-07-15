@@ -1,20 +1,29 @@
 import { Button, Modal, Placeholder } from "@telegram-apps/telegram-ui";
 import { useInitData } from "@tma.js/sdk-react";
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import { createElement, FC, useContext, useMemo } from "react";
 import { EnergyIcon, MiningIcon, PowerIcon } from "../assets/icons";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { SocketContext } from "../socket/socket";
+import { formatMoney, formatNumber } from "../utils";
 import { getMiningRatePerHour } from "../utils/getMiningRate";
 
 const BoostsPage: FC = () => {
   const socket = useContext(SocketContext);
 
   const initData = useInitData();
+  const eventBuilder = useTWAEvent();
 
   const lvlBarEnergy = useAppSelector((state) => state.clicker.lvlBarEnergy);
+  const lvlRegenEnergy = useAppSelector(
+    (state) => state.clicker.lvlRegenEnergy
+  );
   const lvlClick = useAppSelector((state) => state.clicker.lvlClick);
   const lvlMining = useAppSelector((state) => state.clicker.lvlMining);
   const money = useAppSelector((state) => state.clicker.money);
+  const energyCost = useAppSelector(
+    (state) => state.clicker.upgradeEnergyPerSecondCost
+  );
   const autoClickCost = useAppSelector(
     (state) => state.clicker.upgradeAutoClickCost
   );
@@ -29,9 +38,13 @@ const BoostsPage: FC = () => {
         subtitle: `Add +${lvlClick} per click`,
         description: `+${lvlClick + 1} per click when increasing the level`,
         level: lvlClick,
-        boost: upgradeClickCost,
+        boost: formatNumber(upgradeClickCost),
         icon: PowerIcon,
         onClick: () => {
+          eventBuilder.track("Button Clicked", {
+            label: "Buy power boost", // Additional info about the button
+            category: "Power boost buy", // Categorize the event
+          });
           socket?.emit("buyBoostTap", {
             telegramId: initData?.user?.id,
           });
@@ -40,29 +53,39 @@ const BoostsPage: FC = () => {
       },
       {
         title: "Energy",
-        subtitle: "Add +1 to energy",
-        description: "+1 to energy when increasing the level",
+        subtitle: `Add +${lvlRegenEnergy} to energy`,
+        description: `+${
+          lvlRegenEnergy + 1
+        } to energy when increasing the level`,
         level: lvlBarEnergy,
-        boost: "5 000",
+        boost: formatNumber(energyCost),
         icon: EnergyIcon,
         onClick: () => {
-          socket?.emit("buyBoostEnergyBar", {
+          eventBuilder.track("Button Clicked", {
+            label: "Buy Energy boost", // Additional info about the button
+            category: "Energy boost buy", // Categorize the event
+          });
+          socket?.emit("buyBoostEnergyRegeneration", {
             telegramId: initData?.user?.id,
           });
         },
       },
       {
         title: "Mining",
-        subtitle: `Add +${Math.round(
+        subtitle: `Add +${formatMoney(
           getMiningRatePerHour(lvlMining)
         )} per hour`,
-        description: `+${Math.round(
+        description: `+${formatMoney(
           getMiningRatePerHour(lvlMining + 1)
         )} per hour when increasing the level`,
         level: lvlMining,
-        boost: autoClickCost,
+        boost: formatNumber(autoClickCost),
         icon: MiningIcon,
         onClick: () => {
+          eventBuilder.track("Button Clicked", {
+            label: "Buy mining boost", // Additional info about the button
+            category: "Mining boost buy", // Categorize the event
+          });
           socket?.emit("buyBoostAutoTap", {
             telegramId: initData?.user?.id,
           });
@@ -70,7 +93,7 @@ const BoostsPage: FC = () => {
         disabled: autoClickCost > money,
       },
     ],
-    [lvlClick, lvlMining, lvlBarEnergy, initData?.user?.id, socket]
+    [lvlClick, lvlMining, initData?.user?.id, socket, lvlRegenEnergy]
   );
 
   return (
@@ -84,6 +107,31 @@ const BoostsPage: FC = () => {
                 <span>{boost.title}</span>
               </div>
             }
+            onOpenChange={() => {
+              switch (boost.title) {
+                case "Power":
+                  eventBuilder.track("Button Clicked", {
+                    label: "Open Power modal", // Additional info about the button
+                    category: "Power boost", // Categorize the event
+                  });
+                  break;
+                case "Energy":
+                  eventBuilder.track("Button Clicked", {
+                    label: "Open Energy modal", // Additional info about the button
+                    category: "Energy boost", // Categorize the event
+                  });
+                  break;
+                case "Mining":
+                  eventBuilder.track("Button Clicked", {
+                    label: "Open Mining modal", // Additional info about the button
+                    category: "Mining boost", // Categorize the event
+                  });
+                  break;
+
+                default:
+                  break;
+              }
+            }}
             className="z-50 bg-[#2A2A2A]"
             trigger={
               <div className="bg-[#383838] rounded-[14px] px-[14px] py-[10px] flex items-center justify-between gap-[14px]">

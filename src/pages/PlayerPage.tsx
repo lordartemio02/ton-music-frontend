@@ -1,3 +1,4 @@
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import { FC, useEffect, useRef } from "react";
 import Slider, { Settings } from "react-slick";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
@@ -20,6 +21,8 @@ const PlayerPage: FC = () => {
   const listMusic = useAppSelector((state) => state.music.list);
   const currentMusic = useAppSelector((state) => state.music.currentMusic);
   const indexMusic = useAppSelector((state) => state.music.index);
+
+  const eventBuilder = useTWAEvent();
 
   const time = useAudioTime();
   const { duration, seek } = useGlobalAudioPlayer();
@@ -78,7 +81,12 @@ const PlayerPage: FC = () => {
             </div>
           </div>
           <ShareOutlineIcon
-            onClick={() => console.log("afsa")}
+            onClick={() => {
+              eventBuilder.track("Button Clicked", {
+                label: "Share song", // Additional info about the button
+                category: "Share song", // Categorize the event
+              });
+            }}
             className="cursor-pointer"
           />
         </div>

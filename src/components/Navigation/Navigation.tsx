@@ -1,14 +1,34 @@
+import { useTWAEvent } from "@tonsolutions/telemetree-react";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { navigationList } from "./Navigation.config";
 
 const Navigation: FC = () => {
+  const eventBuilder = useTWAEvent();
+
   return (
     <nav className="flex items-center gap-4 justify-center bg-black">
       {navigationList.map((item) => (
         <NavLink
           onClick={(e) => {
             if (item?.disabled) {
+              switch (item.title) {
+                case "Earn":
+                  eventBuilder.track("Open Earn page", {
+                    label: "Open Earn page", // Additional info about the button
+                    category: "Earn page", // Categorize the event
+                  });
+                  break;
+                case "Explore":
+                  eventBuilder.track("Button Clicked", {
+                    label: "Explore page", // Additional info about the button
+                    category: "Explore page", // Categorize the event
+                  });
+                  break;
+
+                default:
+                  break;
+              }
               e.preventDefault();
             }
           }}
@@ -18,8 +38,7 @@ const Navigation: FC = () => {
             `w-[74px] py-[10px] flex flex-col justify-center items-center text-[10px] font-semibold gap-3 ${
               isActive ? "text-buttonColor" : "text-secondaryHintColor"
             } ${item?.disabled ? "text-[#707579]/75" : ""}`
-          }
-        >
+          }>
           {({ isActive }) => (
             <>
               {
