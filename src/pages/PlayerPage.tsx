@@ -82,7 +82,7 @@ const PlayerPage: FC = () => {
           </div>
           <ShareOutlineIcon
             onClick={() => {
-              eventBuilder.track("Button Clicked", {
+              eventBuilder.track("Share song", {
                 label: "Share song", // Additional info about the button
                 category: "Share song", // Categorize the event
               });

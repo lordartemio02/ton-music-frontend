@@ -15,7 +15,6 @@ export const calendarList = [
   {
     day: 1,
     count: "500",
-    active: true,
   },
   {
     day: 2,

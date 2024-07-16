@@ -1,49 +1,61 @@
 import { Button, Modal, Placeholder } from "@telegram-apps/telegram-ui";
-import { FC } from "react";
+import { initUtils } from "@tma.js/sdk-react";
+import { FC, useMemo } from "react";
 import { DuckFriendsIcon, DuckNewsIcon } from "../../assets/icons/ducks";
 import { IEarnList } from "./EarnListTasks.interface";
 
 const EarnListTasks: FC = () => {
-  const earnList: IEarnList[] = [
-    {
-      title: "Join our community",
-      subtitle: "Become a part of our family",
-      description: "Be the first to know about all the news!",
-      boost: "5 000",
-      icon: DuckNewsIcon,
-      buttons: [
-        {
-          title: "Subscribe",
-          mode: "filled",
-          onClick: () => console.log("subscribe"),
-        },
-        {
-          title: "Check",
-          mode: "bezeled",
-          onClick: () => console.log("Check"),
-        },
-      ],
-    },
-    {
-      title: "Invite friend",
-      subtitle: "Play and listen to music together",
-      description: "Be the first to know about all the news!",
-      boost: "5 000",
-      icon: DuckFriendsIcon,
-      buttons: [
-        {
-          title: "Invite",
-          mode: "filled",
-          onClick: () => console.log("Invite"),
-        },
-        {
-          title: "Check",
-          mode: "bezeled",
-          onClick: () => console.log("Check"),
-        },
-      ],
-    },
-  ];
+  const earnList: IEarnList[] = useMemo(
+    () => [
+      {
+        title: "Join our community",
+        subtitle: "Become a part of our family",
+        description: "Be the first to know about all the news!",
+        boost: "5 000",
+        icon: DuckNewsIcon,
+        buttons: [
+          {
+            title: "Subscribe",
+            mode: "filled",
+            onClick: () => {
+              const utils = initUtils();
+              utils.openTelegramLink("https://t.me/tonmusiccommunity");
+            },
+          },
+          {
+            title: "Check",
+            mode: "bezeled",
+            onClick: () => console.log("Check"),
+          },
+        ],
+      },
+      {
+        title: "Invite friend",
+        subtitle: "Play and listen to music together",
+        description: "Be the first to know about all the news!",
+        boost: "5 000",
+        icon: DuckFriendsIcon,
+        buttons: [
+          {
+            title: "Invite",
+            mode: "filled",
+            onClick: () => {
+              const utils = initUtils();
+              utils.openTelegramLink(
+                "https://t.me/share/url?url=https://t.me/ton_music_bot/TonMusic"
+              );
+            },
+          },
+          {
+            title: "Check",
+            mode: "bezeled",
+            onClick: () => console.log("Check"),
+          },
+        ],
+      },
+    ],
+    []
+  );
 
   return (
     <div className="flex flex-col gap-2">
@@ -52,11 +64,11 @@ const EarnListTasks: FC = () => {
         <Modal
           key={`earn-${index}`}
           header={
-            <div className="text-center text-[--tgui--text_color] text-[17px] font-semibold py-[19px]">
+            <div className="text-center relative text-white text-[17px] font-semibold py-[19px]">
               {earn.title}
             </div>
           }
-          className="z-50"
+          className="z-50 bg-[#2A2A2A]"
           trigger={
             <div className="bg-[#383838] rounded-[14px] px-[14px] py-[10px] flex items-center justify-between gap-[14px]">
               <div className="flex items-center gap-[14px]">
@@ -70,11 +82,10 @@ const EarnListTasks: FC = () => {
               </div>
               <div className="text-[#55A6FF] text-[17px]">Get</div>
             </div>
-          }
-        >
+          }>
           <Placeholder>
             <earn.icon />
-            <div className="text-[17px]">{earn.subtitle}</div>
+            <div className="text-[17px] text-white">{earn.subtitle}</div>
             <div className="text-[17px] text-[--tgui--hint_color]">
               {earn.description}
             </div>
@@ -89,8 +100,7 @@ const EarnListTasks: FC = () => {
                   onClick={button.onClick}
                   mode={button.mode}
                   className="w-full"
-                  size="l"
-                >
+                  size="l">
                   {button.title}
                 </Button>
               ))}

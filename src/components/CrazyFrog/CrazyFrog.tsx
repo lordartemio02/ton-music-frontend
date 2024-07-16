@@ -188,11 +188,6 @@ const CrazyFrog: FC = () => {
       setScaleBlur(Math.min(scaleBLur + 0.2, 1)); // Увеличить масштаб при клике, но не более 1
     }
 
-    eventBuilder.track("Button Clicked", {
-      label: "Tap Crazy Frog", // Additional info about the button
-      category: "Clicker Tap", // Categorize the event
-    });
-
     // setEnergy();
   };
 
@@ -201,7 +196,7 @@ const CrazyFrog: FC = () => {
   };
 
   const handleClickBoost = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Boosts page open", {
       label: "Boosts page open", // Additional info about the button
       category: "Boost page", // Categorize the event
     });
@@ -225,7 +220,7 @@ const CrazyFrog: FC = () => {
   }, [scaleBLur]);
 
   const onClickWave = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Ton Music Wave button", {
       label: "Ton Music Wave button", // Additional info about the button
       category: "Wave button", // Categorize the event
     });

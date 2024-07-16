@@ -41,7 +41,7 @@ const BoostsPage: FC = () => {
         boost: formatNumber(upgradeClickCost),
         icon: PowerIcon,
         onClick: () => {
-          eventBuilder.track("Button Clicked", {
+          eventBuilder.track("Buy power boost", {
             label: "Buy power boost", // Additional info about the button
             category: "Power boost buy", // Categorize the event
           });
@@ -61,7 +61,7 @@ const BoostsPage: FC = () => {
         boost: formatNumber(energyCost),
         icon: EnergyIcon,
         onClick: () => {
-          eventBuilder.track("Button Clicked", {
+          eventBuilder.track("Buy Energy boost", {
             label: "Buy Energy boost", // Additional info about the button
             category: "Energy boost buy", // Categorize the event
           });
@@ -82,7 +82,7 @@ const BoostsPage: FC = () => {
         boost: formatNumber(autoClickCost),
         icon: MiningIcon,
         onClick: () => {
-          eventBuilder.track("Button Clicked", {
+          eventBuilder.track("Buy mining boost", {
             label: "Buy mining boost", // Additional info about the button
             category: "Mining boost buy", // Categorize the event
           });
@@ -110,19 +110,19 @@ const BoostsPage: FC = () => {
             onOpenChange={() => {
               switch (boost.title) {
                 case "Power":
-                  eventBuilder.track("Button Clicked", {
+                  eventBuilder.track("Open Power modal", {
                     label: "Open Power modal", // Additional info about the button
                     category: "Power boost", // Categorize the event
                   });
                   break;
                 case "Energy":
-                  eventBuilder.track("Button Clicked", {
+                  eventBuilder.track("Open Energy modal", {
                     label: "Open Energy modal", // Additional info about the button
                     category: "Energy boost", // Categorize the event
                   });
                   break;
                 case "Mining":
-                  eventBuilder.track("Button Clicked", {
+                  eventBuilder.track("Open Mining modal", {
                     label: "Open Mining modal", // Additional info about the button
                     category: "Mining boost", // Categorize the event
                   });

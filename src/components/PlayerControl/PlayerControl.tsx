@@ -16,7 +16,7 @@ const PlayerControl: FC<IPlayerControl> = ({ pnPerv, onNext }) => {
 
   const onClickPlayButton = () => {
     if (!playing) {
-      eventBuilder.track("Button Clicked", {
+      eventBuilder.track("Start music from full player", {
         label: "Start music from full player", // Additional info about the button
         category: "Start music", // Categorize the event
       });

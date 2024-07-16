@@ -11,18 +11,19 @@ const Navigation: FC = () => {
       {navigationList.map((item) => (
         <NavLink
           onClick={(e) => {
-            if (item?.disabled) {
+            if (!item?.disabled) {
               switch (item.title) {
                 case "Earn":
                   eventBuilder.track("Open Earn page", {
-                    label: "Open Earn page", // Additional info about the button
-                    category: "Earn page", // Categorize the event
+                    label: "Open Earn page",
+                    category: "Earn page",
                   });
+                  console.log("work");
                   break;
                 case "Explore":
-                  eventBuilder.track("Button Clicked", {
-                    label: "Explore page", // Additional info about the button
-                    category: "Explore page", // Categorize the event
+                  eventBuilder.track("Explore page", {
+                    label: "Explore page",
+                    category: "Explore page",
                   });
                   break;
 

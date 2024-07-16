@@ -16,10 +16,12 @@ import {
   onSetLvlBarEnergy,
   onSetLvlClick,
   onSetLvlMining,
+  onSetLvlPickupDailyReward,
   onSetLvlRegenEnergy,
   onSetMiningPerHour,
   onSetMiningPerSecond,
   onSetMoney,
+  onSetReadyToPickupDailyReward,
   onSetUpgradeEnergyCost,
 } from "../../redux/slices/clickerSlice";
 import {
@@ -157,6 +159,10 @@ const Layout: FC<ILayout> = ({ children }) => {
         dispatch(onSetMoney(data.coins));
         dispatch(onSetLvlClick(data.tap_level));
         dispatch(onSetClickCost(data.values.upgrade_click_cost));
+      });
+      socket?.on("checkDailyRewardStatus", (data) => {
+        dispatch(onSetReadyToPickupDailyReward(data.readyToPickup));
+        dispatch(onSetLvlPickupDailyReward(data.dailyRewardActualLevel));
       });
     });
   }, [socket]);

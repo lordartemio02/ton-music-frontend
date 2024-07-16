@@ -12,6 +12,8 @@ export interface ClickerState {
   upgradeClickCost: number;
   miningRatePerHour: number;
   miningRatePerSecond: number;
+  dailyRewardActualLevel: number;
+  readyToPickup: boolean;
 }
 
 const initialState: ClickerState = {
@@ -26,6 +28,8 @@ const initialState: ClickerState = {
   miningRatePerHour: 0,
   miningRatePerSecond: 0,
   upgradeEnergyPerSecondCost: 0,
+  dailyRewardActualLevel: 1,
+  readyToPickup: true,
 };
 
 export const clickerSlice = createSlice({
@@ -98,6 +102,18 @@ export const clickerSlice = createSlice({
     ) => {
       state.upgradeEnergyPerSecondCost = action.payload;
     },
+    onSetReadyToPickupDailyReward: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["readyToPickup"]>
+    ) => {
+      state.readyToPickup = action.payload;
+    },
+    onSetLvlPickupDailyReward: (
+      state: ClickerState,
+      action: PayloadAction<ClickerState["dailyRewardActualLevel"]>
+    ) => {
+      state.dailyRewardActualLevel = action.payload;
+    },
   },
 });
 
@@ -114,6 +130,8 @@ export const {
   onSetMiningPerHour,
   onSetMiningPerSecond,
   onSetUpgradeEnergyCost,
+  onSetLvlPickupDailyReward,
+  onSetReadyToPickupDailyReward,
 } = clickerSlice.actions;
 
 export default clickerSlice.reducer;

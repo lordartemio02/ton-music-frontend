@@ -38,7 +38,7 @@ const ExplorePage: FC = () => {
   const eventBuilder = useTWAEvent();
 
   const handleClickPopularAlbums = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Popular albums page", {
       label: "Popular albums page", // Additional info about the button
       category: "Popular albums page", // Categorize the event
     });
@@ -46,7 +46,7 @@ const ExplorePage: FC = () => {
   };
 
   const handleClickNewReleases = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("New releases page", {
       label: "New releases page", // Additional info about the button
       category: "New releases page", // Categorize the event
     });
@@ -54,7 +54,7 @@ const ExplorePage: FC = () => {
   };
 
   const handleClickTonChart = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Ton charts page", {
       label: "Ton charts page", // Additional info about the button
       category: "Ton charts page", // Categorize the event
     });
@@ -62,7 +62,7 @@ const ExplorePage: FC = () => {
   };
 
   const handleClickTopWeekArtists = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Top week artists page", {
       label: "Top week artists page", // Additional info about the button
       category: "Top week artists page", // Categorize the event
     });
@@ -70,7 +70,7 @@ const ExplorePage: FC = () => {
   };
 
   const handleClickNewAlbumsByGenres = () => {
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("New albums by genres page", {
       label: "New albums by genres page", // Additional info about the button
       category: "New albums by genres page", // Categorize the event
     });

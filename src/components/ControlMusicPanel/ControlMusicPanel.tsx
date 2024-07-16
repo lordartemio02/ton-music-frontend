@@ -20,7 +20,7 @@ const ControlMusicPanel: FC = () => {
 
   const handleClickGlobalPlayer = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    eventBuilder.track("Button Clicked", {
+    eventBuilder.track("Open player full page", {
       label: "Open player full page", // Additional info about the button
       category: "Open player", // Categorize the event
     });
@@ -38,7 +38,7 @@ const ControlMusicPanel: FC = () => {
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
       if (!playing) {
-        eventBuilder.track("Button Clicked", {
+        eventBuilder.track("Start music from Player section", {
           label: "Start music from Player section", // Additional info about the button
           category: "Start music", // Categorize the event
         });

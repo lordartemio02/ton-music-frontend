@@ -17,7 +17,7 @@ const ConnectWallet: FC = () => {
 
   const handleWalletOpenOrClose = async () => {
     if (!userFriendlyAddress) {
-      eventBuilder.track("Button Clicked", {
+      eventBuilder.track("Connect wallet", {
         label: "Connect wallet", // Additional info about the button
         category: "Wallet connect", // Categorize the event
       });
