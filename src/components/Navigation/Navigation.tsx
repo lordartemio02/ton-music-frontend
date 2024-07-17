@@ -30,6 +30,7 @@ const Navigation: FC = () => {
                 default:
                   break;
               }
+            } else {
               e.preventDefault();
             }
           }}

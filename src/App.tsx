@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { useSocketio } from "./hooks/useSocketio";
+import { useGetMeQuery } from "./redux/api/auth";
 import { onTokenAccess } from "./redux/slices/authSlice";
 import { authRoutes, publicRoutes } from "./routers";
 import { SocketContext } from "./socket/socket";
@@ -22,6 +23,8 @@ const App: FC = () => {
     transports: ["websocket", "polling"],
     query: { initData: initDataUser },
   });
+
+  const { data } = useGetMeQuery();
 
   useEffect(() => {
     dispatch(onTokenAccess(JSON.stringify(initData)));
